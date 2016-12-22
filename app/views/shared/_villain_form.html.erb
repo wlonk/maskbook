@@ -1,0 +1,23 @@
+<%= form_for(@villain) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+
+  <%= f.label :drive %>
+  <%= f.text_field :drive %>
+
+  <%= f.label :moves %>
+  <%= f.text_field :moves %>
+
+  <%= f.label :conditions %>
+  <%= f.text_field :conditions %>
+
+  <%= f.label :abilities %>
+  <%= f.text_field :abilities %>
+
+  <%= f.label :description %>
+  <%= f.text_field :description %>
+
+  <%= f.submit "do it" %>
+<% end %>

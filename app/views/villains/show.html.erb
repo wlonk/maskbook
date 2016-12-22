@@ -1,0 +1,16 @@
+<% provide(:title, @villain.name) %>
+<h1>
+  <%= @villain.name %>
+</h1>
+<ul>
+  <li><%= @villain.drive %></li>
+  <li><%= @villain.moves %></li>
+  <li><%= @villain.conditions %></li>
+  <li><%= @villain.abilities %></li>
+  <li><%= @villain.description %></li>
+</ul>
+
+<% if current_user == @villain.user %>
+  <%= link_to "Edit", edit_villain_path(@villain) %>
+  <%= link_to "Delete", villain_path(@villain), method: :delete %>
+<% end %>

@@ -1,0 +1,12 @@
+<% provide(:title, "Villains") %>
+<h1>Villains</h1>
+<% if logged_in? %>
+  <%= link_to "New", new_villain_path %>
+<% end %>
+<ul>
+  <% @villains.each do |villain| %>
+    <li>
+      <%= link_to villain.name, villain %>
+    </li>
+  <% end %>
+</ul>
