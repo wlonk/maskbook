@@ -1,23 +1,37 @@
 <%= form_for(@villain) do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
 
-  <%= f.label :name %>
-  <%= f.text_field :name %>
+  <div class="form-group">
+    <%= f.label :name %>
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
 
-  <%= f.label :drive %>
-  <%= f.text_field :drive %>
+  <div class="form-group">
+    <%= f.label :drive %>
+    <%= f.text_field :drive, class: "form-control" %>
+  </div>
 
-  <%= f.label :moves %>
-  <%= f.text_field :moves %>
+  <div class="form-group">
+    <%= f.label :conditions %>
+    <%= f.text_field :conditions, class: "form-control" %>
+  </div>
 
-  <%= f.label :conditions %>
-  <%= f.text_field :conditions %>
+  <div class="form-group">
+    <%= f.label :moves %>
+    <%= f.text_area :moves, class: "form-control" %>
+  </div>
 
-  <%= f.label :abilities %>
-  <%= f.text_field :abilities %>
+  <div class="form-group">
+    <%= f.label :abilities %>
+    <%= f.text_area :abilities, class: "form-control" %>
+  </div>
 
-  <%= f.label :description %>
-  <%= f.text_field :description %>
+  <div class="form-group">
+    <%= f.label :description %>
+    <%= f.text_area :description, class: "form-control" %>
+  </div>
 
-  <%= f.submit "do it" %>
+  <div class="form-group">
+    <%= f.submit "save", class: "btn btn-default" %>
+  </div>
 <% end %>

@@ -1,6 +1,12 @@
 <% provide(:title, @villain.name) %>
 <h1>
   <%= @villain.name %>
+  <% if current_user == @villain.user %>
+    <div class="btn-group pull-right" role="group">
+      <%= link_to "Edit", edit_villain_path(@villain), class: "btn btn-primary" %>
+      <%= link_to "Delete", villain_path(@villain), method: :delete, class: "btn btn-danger" %>
+    </div>
+  <% end %>
 </h1>
 <ul>
   <li><%= @villain.drive %></li>
@@ -9,8 +15,3 @@
   <li><%= @villain.abilities %></li>
   <li><%= @villain.description %></li>
 </ul>
-
-<% if current_user == @villain.user %>
-  <%= link_to "Edit", edit_villain_path(@villain) %>
-  <%= link_to "Delete", villain_path(@villain), method: :delete %>
-<% end %>
