@@ -37,9 +37,10 @@ class VillainsController < ApplicationController
   end
 
   def destroy
+    @villain = Villain.find(params[:id])
     @villain.destroy
     flash[:success] = "Villain deleted"
-    redirect_to 'index'
+    redirect_to action: 'index', status: 303
   end
 
   private
