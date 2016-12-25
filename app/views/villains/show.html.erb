@@ -8,10 +8,18 @@
     </div>
   <% end %>
 </h1>
-<ul>
-  <li><%= @villain.drive %></li>
-  <li><%= @villain.moves %></li>
-  <li><%= @villain.conditions %></li>
-  <li><%= @villain.abilities %></li>
-  <li><%= @villain.description %></li>
-</ul>
+
+<h2>Drive</h2>
+<%= markdown(@villain.drive) %>
+
+<h2>Moves</h2>
+<%= markdown(@villain.moves) %>
+
+<h2>Conditions</h2>
+<%= markdown(@villain.conditions) %>
+
+<h2>Abilities</h2>
+<%= markdown(@villain.abilities) %>
+
+<h2>Description</h2>
+<%= markdown(@villain.description) %>
