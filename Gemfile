@@ -32,8 +32,8 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
-# Use ActiveModel has_secure_password
-gem 'bcrypt', '~> 3.1.7'
+# Use Devise for auth{z,n}
+gem 'devise', '~> 4.2.0'
 # Render that markdown:
 gem 'redcarpet', '~> 3.0.0'
 

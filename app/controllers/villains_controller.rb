@@ -1,9 +1,11 @@
 class VillainsController < ApplicationController
-  before_action :logged_in_user, only: [:new, :create, :edit, :update, :destroy]
+  include Devise::Controllers::Helpers 
+
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   before_action :is_owner?, only: [:edit, :update, :destroy]
 
   def new
-    @villain = current_user.villains.build if logged_in?
+    @villain = current_user.villains.build if user_signed_in?
   end
 
   def create
@@ -57,7 +59,10 @@ class VillainsController < ApplicationController
     end
 
     def is_owner?
-      @villain = current_user.villains.find_by(id: params[:id])
-      redirect_to root_url if @villain.nil?
+      villain = current_user.villains.find_by(id: params[:id])
+      if villain.nil?
+        villain = Villain.find(params[:id])
+        redirect_to villain
+      end
     end
 end
