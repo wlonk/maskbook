@@ -1,0 +1,28 @@
+<% provide(:title, @villain.name) %>
+<h1>
+  <%= @villain.name %>
+  <small>
+    by <%= link_to @villain.user.name, @villain.user %>
+  </small>
+  <% if current_user == @villain.user %>
+    <div class="btn-group pull-right" role="group">
+      <%= link_to "Edit", edit_villain_path(@villain), class: "btn btn-primary" %>
+      <%= link_to "Delete", villain_path(@villain), data: {:confirm => 'Are you sure?'}, :method => :delete, class: "btn btn-danger" %>
+    </div>
+  <% end %>
+</h1>
+
+<h2>Drive</h2>
+<%= markdown(@villain.drive) %>
+
+<h2>Moves</h2>
+<%= markdown(@villain.moves) %>
+
+<h2>Conditions</h2>
+<%= markdown(@villain.conditions) %>
+
+<h2>Abilities</h2>
+<%= markdown(@villain.abilities) %>
+
+<h2>Description</h2>
+<%= markdown(@villain.description) %>

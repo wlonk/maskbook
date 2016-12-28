@@ -1,0 +1,37 @@
+<%= form_for(@villain) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+
+  <div class="form-group">
+    <%= f.label :name %>
+    <%= f.text_field :name, autofocus: true, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :drive %>
+    <%= f.text_field :drive, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :conditions %>
+    <%= f.text_area :conditions, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :moves %>
+    <%= f.text_area :moves, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :abilities %>
+    <%= f.text_area :abilities, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :description %>
+    <%= f.text_area :description, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit "save", class: "btn btn-default" %>
+  </div>
+<% end %>
