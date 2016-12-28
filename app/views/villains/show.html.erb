@@ -1,6 +1,9 @@
 <% provide(:title, @villain.name) %>
 <h1>
   <%= @villain.name %>
+  <small>
+    by <%= link_to @villain.user.name, @villain.user %>
+  </small>
   <% if current_user == @villain.user %>
     <div class="btn-group pull-right" role="group">
       <%= link_to "Edit", edit_villain_path(@villain), class: "btn btn-primary" %>
