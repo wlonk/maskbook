@@ -6,8 +6,19 @@
     <%= f.text_field :name, autofocus: true, class: "form-control" %>
   </div>
 
-  <%# real name %>
-  <%# generation %>
+  <div class="form-group">
+    <%= f.label :real_name %>
+    <%= f.text_field :real_name, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :generation %>
+    <%= f.select(
+      :generation,
+      Villain.generations.keys.map { |g| [ g.titleize, g ] },
+      {},
+      class: "form-control") %>
+  </div>
 
   <div class="form-group">
     <%= f.label :drive %>

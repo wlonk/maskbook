@@ -50,6 +50,8 @@ class VillainsController < ApplicationController
     def villain_params
       params.require(:villain).permit(
         :name,
+        :real_name,
+        :generation,
         :drive,
         :moves,
         :abilities,

@@ -2,6 +2,7 @@
 <h1>
   <%= @villain.name %>
   <small>
+    <%= @villain.generation %> generation,
     by <%= link_to @villain.user.name, @villain.user %>
   </small>
   <% if current_user == @villain.user %>
@@ -13,8 +14,9 @@
 </h1>
 
 <%= image_tag @villain.mugshot.url(:medium), class: "img-rounded pull-right" %>
-<%# real name %>
-<%# generation %>
+
+<h2>Real Name</h2>
+<%= markdown(@villain.real_name) %>
 
 <h2>Drive</h2>
 <%= markdown(@villain.drive) %>
