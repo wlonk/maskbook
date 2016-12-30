@@ -2,6 +2,9 @@ class Villain < ApplicationRecord
   belongs_to :user
   validates :user_id, presence: true
   validates :name,    presence: true
+
+  enum generation: [ :Gold, :Silver, :Bronze, :Modern ]
+
   has_and_belongs_to_many :conditions
 
   has_attached_file(
