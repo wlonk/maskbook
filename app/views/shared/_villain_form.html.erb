@@ -6,24 +6,31 @@
     <%= f.text_field :name, autofocus: true, class: "form-control" %>
   </div>
 
+  <%# real name %>
+  <%# generation %>
+
   <div class="form-group">
     <%= f.label :drive %>
     <%= f.text_field :drive, class: "form-control" %>
   </div>
 
   <div class="form-group">
+    <%= f.label :abilities %>
+    <%= f.text_area :abilities, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
     <%= f.label :conditions %>
-    <%= f.text_area :conditions, class: "form-control" %>
+    <%= f.collection_check_boxes :condition_ids, Condition.all, :id, :name do |b|%>
+      <div class="checkbox">
+        <%= b.label { b.check_box + " " + b.text } %>
+      </div>
+    <% end %>
   </div>
 
   <div class="form-group">
     <%= f.label :moves %>
     <%= f.text_area :moves, class: "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :abilities %>
-    <%= f.text_area :abilities, class: "form-control" %>
   </div>
 
   <div class="form-group">
