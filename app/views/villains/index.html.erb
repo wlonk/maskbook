@@ -7,10 +7,19 @@
     </div>
   <% end %>
 </h1>
-<ul>
+<ul class="media-list">
   <% @villains.each do |villain| %>
-    <li>
-      <%= link_to villain.name, villain %>
+    <li class="media">
+        <div class="media-body">
+          <h4 class="media-heading">
+      <%= link_to villain do %>
+            <%= villain.name %>
+      <% end %>
+          </h4>
+          <div>
+            <%= markdown(villain.drive) %>
+          </div>
+        </div>
     </li>
   <% end %>
 </ul>
