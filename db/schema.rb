@@ -10,10 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161228181024) do
+ActiveRecord::Schema.define(version: 20161230043032) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "conditions", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "conditions_villains", id: false, force: :cascade do |t|
+    t.integer "condition_id"
+    t.integer "villain_id"
+    t.index ["condition_id"], name: "index_conditions_villains_on_condition_id", using: :btree
+    t.index ["villain_id"], name: "index_conditions_villains_on_villain_id", using: :btree
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
@@ -39,7 +52,6 @@ ActiveRecord::Schema.define(version: 20161228181024) do
     t.string   "name"
     t.text     "drive"
     t.text     "moves"
-    t.text     "conditions"
     t.text     "abilities"
     t.text     "description"
     t.datetime "created_at",  null: false

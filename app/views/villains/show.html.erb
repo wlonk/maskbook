@@ -12,17 +12,24 @@
   <% end %>
 </h1>
 
+<%# real name %>
+<%# generation %>
+
 <h2>Drive</h2>
 <%= markdown(@villain.drive) %>
 
-<h2>Moves</h2>
-<%= markdown(@villain.moves) %>
-
-<h2>Conditions</h2>
-<%= markdown(@villain.conditions) %>
-
 <h2>Abilities</h2>
 <%= markdown(@villain.abilities) %>
+
+<h2>Conditions</h2>
+<ul>
+  <% @villain.conditions.each do |condition| %>
+    <li><%= condition.name %></li>
+  <% end %>
+</ul>
+
+<h2>Moves</h2>
+<%= markdown(@villain.moves) %>
 
 <h2>Description</h2>
 <%= markdown(@villain.description) %>

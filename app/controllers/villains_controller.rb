@@ -30,8 +30,8 @@ class VillainsController < ApplicationController
   end
 
   def update
-    @villain = current_user.villains.build(villain_params)
-    if @villain.save
+    @villain = Villain.find(params[:id])
+    if @villain.update(villain_params)
       redirect_to @villain
     else
       render 'edit'
@@ -52,9 +52,9 @@ class VillainsController < ApplicationController
         :name,
         :drive,
         :moves,
-        :conditions,
         :abilities,
         :description,
+        :condition_ids => [],
       )
     end
 
