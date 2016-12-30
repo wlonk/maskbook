@@ -54,6 +54,7 @@ class VillainsController < ApplicationController
         :moves,
         :abilities,
         :description,
+        :mugshot,
         :condition_ids => [],
       )
     end
