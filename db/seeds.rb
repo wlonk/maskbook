@@ -8,3 +8,6 @@
 %w[Afraid Angry Guilty Hopeless Insecure].each do |word|
   Condition.find_or_create_by(name: word)
 end
+# Generate slugs:
+User.find_each(&:save)
+Villain.find_each(&:save)

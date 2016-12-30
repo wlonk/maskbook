@@ -22,15 +22,15 @@ class VillainsController < ApplicationController
   end
 
   def show
-    @villain = Villain.find(params[:id])
+    @villain = Villain.friendly.find(params[:id])
   end
 
   def edit
-    @villain = Villain.find(params[:id])
+    @villain = Villain.friendly.find(params[:id])
   end
 
   def update
-    @villain = Villain.find(params[:id])
+    @villain = Villain.friendly.find(params[:id])
     if @villain.update(villain_params)
       redirect_to @villain
     else
@@ -39,7 +39,7 @@ class VillainsController < ApplicationController
   end
 
   def destroy
-    @villain = Villain.find(params[:id])
+    @villain = Villain.friendly.find(params[:id])
     @villain.destroy
     flash[:success] = "Villain deleted"
     redirect_to action: 'index', status: 303
@@ -62,9 +62,9 @@ class VillainsController < ApplicationController
     end
 
     def is_owner?
-      villain = current_user.villains.find_by(id: params[:id])
+      villain = current_user.villains.friendly.find_by(slug: params[:id])
       if villain.nil?
-        villain = Villain.find(params[:id])
+        villain = Villain.friendly.find(params[:id])
         redirect_to villain
       end
     end

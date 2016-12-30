@@ -1,0 +1,17 @@
+<ul class="media-list">
+  <% @villains.each do |villain| %>
+    <li class="media">
+      <div class="media-body">
+        <h4 class="media-heading">
+          <%= link_to villain.name, villain %>
+          <% if show_user %>
+            (<%= link_to villain.user.name, villain.user %>)
+          <% end %>
+        </h4>
+        <div>
+          <%= markdown(villain.drive) %>
+        </div>
+      </div>
+    </li>
+  <% end %>
+</ul>
