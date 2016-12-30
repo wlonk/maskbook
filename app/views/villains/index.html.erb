@@ -10,16 +10,14 @@
 <ul class="media-list">
   <% @villains.each do |villain| %>
     <li class="media">
-        <div class="media-body">
-          <h4 class="media-heading">
-      <%= link_to villain do %>
-            <%= villain.name %>
-      <% end %>
-          </h4>
-          <div>
-            <%= markdown(villain.drive) %>
-          </div>
+      <div class="media-body">
+        <h4 class="media-heading">
+          <%= link_to villain.name, villain %> (<%= link_to villain.user.name, villain.user %>)
+        </h4>
+        <div>
+          <%= markdown(villain.drive) %>
         </div>
+      </div>
     </li>
   <% end %>
 </ul>
