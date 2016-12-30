@@ -39,6 +39,8 @@ gem 'redcarpet', '~> 3.0.0'
 # Handle image attachment:
 gem "paperclip", "~> 5.0.0"
 gem 'aws-sdk', "~> 2.6.0"
+# Friendly URL paths:
+gem 'friendly_id', '~> 5.1.0'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
