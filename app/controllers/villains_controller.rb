@@ -18,7 +18,7 @@ class VillainsController < ApplicationController
   end
 
   def index
-    @villains = Villain.all
+    @villains = Villain.paginate(page: params[:page])
   end
 
   def show

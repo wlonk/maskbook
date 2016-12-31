@@ -15,3 +15,7 @@
     </li>
   <% end %>
 </ul>
+
+<div class="text-center">
+  <%= will_paginate @villains, renderer: BootstrapPagination::Rails %>
+</div>
