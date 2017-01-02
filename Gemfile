@@ -44,6 +44,8 @@ gem 'friendly_id', '~> 5.1.0'
 # Pagination
 gem 'will_paginate', '~> 3.1.0'
 gem 'will_paginate-bootstrap', '~> 1.0.0'
+# Taggables
+gem 'acts-as-taggable-on', '~> 4.0'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

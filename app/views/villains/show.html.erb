@@ -15,6 +15,10 @@
 
 <%= image_tag @villain.mugshot.url(:medium), class: "img-rounded pull-right" %>
 
+<% @villain.tag_list.each do |tag| %>
+  <span class="tag tag-default"><%= tag %></span>
+<% end %>
+
 <h2>Real Name</h2>
 <%= markdown(@villain.real_name) %>
 

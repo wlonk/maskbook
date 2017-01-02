@@ -1,6 +1,8 @@
 class Villain < ApplicationRecord
   include FriendlyId
 
+  scope :newest_first, -> { order(created_at: :desc) }
+
   friendly_id :name, use: :slugged
   belongs_to :user
   validates :user_id, presence: true
@@ -16,4 +18,27 @@ class Villain < ApplicationRecord
     default_url: "/images/:style/missing.png",
   )
   validates_attachment_content_type :mugshot, content_type: /\Aimage\/.*\z/
+
+  acts_as_taggable
+
+  def self.search(tags, query)
+    res = all
+    if !tags.empty?
+      res = res.tagged_with tags
+    end
+    res.where(
+      "name ILIKE ? OR
+      drive ILIKE ? OR
+      moves ILIKE ? OR
+      abilities ILIKE ? OR
+      description ILIKE ? OR
+      real_name ILIKE ?",
+      "%#{query}%",
+      "%#{query}%",
+      "%#{query}%",
+      "%#{query}%",
+      "%#{query}%",
+      "%#{query}%",
+    )
+  end
 end
