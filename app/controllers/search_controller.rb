@@ -10,14 +10,18 @@ class SearchController < ApplicationController
   private
 
   def parse_query(query)
-    words = query.split(' ')
-    tag_prefix = "tag:"
-    tags = words.select {
-      |word| word.starts_with? tag_prefix
-    }.map {
-      |word| word.slice(tag_prefix.length..word.length)
-    }
-    non_tags = words.select { |word| !word.starts_with? "tag:" }.join(" ")
-    [tags, non_tags]
+    if query.nil?
+      [[], ""]
+    else
+      words = query.split(' ')
+      tag_prefix = "tag:"
+      tags = words.select {
+        |word| word.starts_with? tag_prefix
+      }.map {
+        |word| word.slice(tag_prefix.length..word.length)
+      }
+      non_tags = words.select { |word| !word.starts_with? "tag:" }.join(" ")
+      [tags, non_tags]
+    end
   end
 end
