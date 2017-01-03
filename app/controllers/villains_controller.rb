@@ -18,7 +18,11 @@ class VillainsController < ApplicationController
   end
 
   def index
-    @villains = Villain.paginate(page: params[:page])
+    if params[:tags]
+      @villains = Villain.tagged_with(params[:tags]).newest_first.paginate(page: params[:page])
+    else
+      @villains = Villain.newest_first.paginate(page: params[:page])
+    end
   end
 
   def show
@@ -47,25 +51,26 @@ class VillainsController < ApplicationController
 
   private
 
-    def villain_params
-      params.require(:villain).permit(
-        :name,
-        :real_name,
-        :generation,
-        :drive,
-        :moves,
-        :abilities,
-        :description,
-        :mugshot,
-        :condition_ids => [],
-      )
-    end
+  def villain_params
+    params.require(:villain).permit(
+      :name,
+      :real_name,
+      :generation,
+      :drive,
+      :moves,
+      :abilities,
+      :description,
+      :mugshot,
+      :tag_list,
+      :condition_ids => [],
+    )
+  end
 
-    def is_owner?
-      villain = current_user.villains.friendly.find_by(slug: params[:id])
-      if villain.nil?
-        villain = Villain.friendly.find(params[:id])
-        redirect_to villain
-      end
+  def is_owner?
+    villain = current_user.villains.friendly.find_by(slug: params[:id])
+    if villain.nil?
+      villain = Villain.friendly.find(params[:id])
+      redirect_to villain
     end
+  end
 end
