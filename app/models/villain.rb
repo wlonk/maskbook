@@ -21,11 +21,34 @@ class Villain < ApplicationRecord
 
   acts_as_taggable
 
-  def self.search(tags, query)
+  def self.search(tags, gens, users, query)
     res = all
+
+    # Search for tags:
     if !tags.empty?
       res = res.tagged_with tags
     end
+
+    # Clean up and validate the generations passed in:
+    gens = gens.map { |gen|
+      gen = gen.capitalize
+      if self.generations.include? gen
+        self.generations[gen.to_sym]
+      end
+    }.select { |gen|
+      !gen.nil?
+    }
+    if !gens.empty?
+      res = res.where("generation in (?)", gens)
+    end
+
+    # Validate users
+    users = User.where("LOWER(name) IN (?)", users.map(&:downcase))
+    if !users.empty?
+      res = res.where(user: users)
+    end
+
+    # Search for the rest, textlike:
     res.where(
       "name ILIKE ? OR
       drive ILIKE ? OR
