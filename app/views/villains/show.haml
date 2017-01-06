@@ -1,0 +1,28 @@
+- provide(:title, @villain.name)
+%h1
+  = @villain.name
+  %small
+    = @villain.generation
+    generation,
+    by #{link_to @villain.user.name, @villain.user}
+  - if current_user == @villain.user
+    .btn-group.pull-right{:role => "group"}
+      = link_to "Edit", edit_villain_path(@villain), class: "btn btn-primary"
+      = link_to "Delete", villain_path(@villain), data: {:confirm => 'Are you sure?'}, :method => :delete, class: "btn btn-danger"
+= image_tag @villain.mugshot.url(:medium), class: "img-rounded pull-right"
+- @villain.tag_list.each do |tag|
+  %span.tag.tag-default= tag
+%h2 Real Name
+= markdown(@villain.real_name)
+%h2 Drive
+= markdown(@villain.drive)
+%h2 Abilities
+= markdown(@villain.abilities)
+%h2 Conditions
+%ul
+  - @villain.conditions.each do |condition|
+    %li= condition.name
+%h2 Moves
+= markdown(@villain.moves)
+%h2 Description
+= markdown(@villain.description)

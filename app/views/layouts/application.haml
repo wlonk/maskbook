@@ -1,0 +1,23 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title= yield(:title) + " | Maskbook"
+    = csrf_meta_tags
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    /[if lt IE 9]
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/r29/html5.min.js">
+      </script>
+  %body
+    = render 'layouts/header'
+    .container
+      - if notice
+        %p.alert.alert-success= notice
+      - if alert
+        %p.alert.alert-danger= alert
+      - if !notice && !alert
+        - flash.each do |message_type, message|
+          %div{:class => "alert alert-#{message_type}"}= message
+      = yield
+    = render 'layouts/footer'
