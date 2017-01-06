@@ -1,40 +1,74 @@
-= form_for(@villain, html: { multipart: true }) do |f|
-  = render 'shared/error_messages', object: f.object
-  .form-group
-    = f.label :name
-    = f.text_field :name, autofocus: true, class: "form-control"
-  .form-group
-    = f.label :tag_list
-    = f.text_field :tag_list, value: f.object.tag_list.join(", "), class: "form-control"
-  .form-group
-    = f.label :real_name
-    = f.text_field :real_name, class: "form-control"
-  .form-group
-    = f.label :generation
-    = f.select(                                               |
-      :generation,                                            |
-      Villain.generations.keys.map { |g| [ g.titleize, g ] }, |
-      {},                                                     |
-      class: "form-control")                                  |
-  .form-group
-    = f.label :drive
-    = f.text_field :drive, class: "form-control"
-  .form-group
-    = f.label :abilities
-    = f.text_area :abilities, class: "form-control"
-  .form-group
-    = f.label :conditions
-    = f.collection_check_boxes :condition_ids, Condition.all, :id, :name do |b|
-      .checkbox
-        = b.label { b.check_box + " " + b.text }
-  .form-group
-    = f.label :moves
-    = f.text_area :moves, class: "form-control"
-  .form-group
-    = f.label :description
-    = f.text_area :description, class: "form-control"
-  .form-group
-    = f.label :mugshot
-    = f.file_field :mugshot
-  .form-group
-    = f.submit "save", class: "btn btn-default"
+.col-md-6
+  = form_for(@villain, html: { multipart: true }) do |f|
+    = render 'shared/error_messages', object: f.object
+    .form-group
+      = f.label :name
+      = f.text_field :name, autofocus: true, class: "form-control"
+    .form-group
+      = f.label :tag_list
+      = f.text_field :tag_list, value: f.object.tag_list.join(", "), class: "form-control"
+    .form-group
+      = f.label :real_name
+      = f.text_field :real_name, class: "form-control"
+    .form-group
+      = f.label :generation
+      = f.select(                                               |
+        :generation,                                            |
+        Villain.generations.keys.map { |g| [ g.titleize, g ] }, |
+        {},                                                     |
+        class: "form-control")                                  |
+    .form-group
+      = f.label :drive
+      = f.text_field :drive, class: "form-control"
+    .form-group
+      = f.label :abilities
+      ~ f.text_area :abilities, class: "form-control", rows: 8
+    .form-group
+      = f.label :conditions
+      = f.collection_check_boxes :condition_ids, Condition.all, :id, :name do |b|
+        .checkbox
+          = b.label { b.check_box + " " + b.text }
+    .form-group
+      = f.label :moves
+      ~ f.text_area :moves, class: "form-control", rows: 8
+    .form-group
+      = f.label :description
+      ~ f.text_area :description, class: "form-control", rows: 8
+    .form-group
+      = f.label :mugshot
+      = f.file_field :mugshot
+    .form-group
+      = f.submit "save", class: "btn btn-default"
+
+.col-md-6
+  %p.help-block
+    You can use Markdown in these fields. Most useful might be emphasis and lists.
+  %h3 Emphasis
+  %pre.code.help-block
+    = preserve do
+      :escaped
+        *This text will be italic*
+        _This will also be italic_
+
+        **This text will be bold**
+        __This will also be bold__
+
+        _You **can** combine them_
+  %h3 Lists
+  %h4 Unordered
+  %pre.code.help-block
+    = preserve do
+      :escaped
+        * Item 1
+        * Item 2
+          * Item 2a
+          * Item 2b
+  %h4 Ordered and Unordered Mixed
+  %pre.code.help-block
+    = preserve do
+      :escaped
+        1. Item 1
+        2. Item 2
+        3. Item 3
+           * Item 3a
+           * Item 3b

@@ -1,12 +1,20 @@
 %ul.media-list
   - @villains.each do |villain|
     %li.media
+      .media-left
+        = image_tag villain.mugshot.url(:thumb), class: "media-object"
       .media-body
         %h4.media-heading
           = link_to villain.name, villain
-          - if show_user
-            (#{link_to villain.user.name, villain.user})
+          (#{villain.generation})
         %div
           = markdown(villain.drive)
+        %div
+          - villain.conditions.each do |condition|
+            %em
+              = condition.name
+        - if show_user
+          %div
+            (by #{link_to villain.user.name, villain.user})
 .text-center
   = will_paginate @villains, renderer: BootstrapPagination::Rails
