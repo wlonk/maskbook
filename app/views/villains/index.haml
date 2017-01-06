@@ -1,0 +1,7 @@
+- provide(:title, "Villains")
+%h1
+  Villains
+  - if user_signed_in?
+    .btn-group.pull-right{:role => "group"}
+      = link_to "New", new_villain_path, class: "btn btn-success"
+= render partial: 'shared/villain_list', locals: { show_user: true }

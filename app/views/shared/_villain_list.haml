@@ -1,0 +1,12 @@
+%ul.media-list
+  - @villains.each do |villain|
+    %li.media
+      .media-body
+        %h4.media-heading
+          = link_to villain.name, villain
+          - if show_user
+            (#{link_to villain.user.name, villain.user})
+        %div
+          = markdown(villain.drive)
+.text-center
+  = will_paginate @villains, renderer: BootstrapPagination::Rails
