@@ -1,4 +1,32 @@
 - provide(:title, "Home")
-%h1 Maskbook
-%p
-  Here are all the villains you could want for Halcyon City.
+
+.jumbotron
+  .container
+    %h1.text-center Maskbook
+    %p.text-center
+      Here are all the villains you could want for Halcyon City.
+
+.container
+  .row
+    .col-md-4
+      %h2 Find a villain
+      %p You can search for villains by their features: tags, generation, name, |
+         description, or even the user who made them.                           |
+      %p
+        = link_to raw("See the silver generation &raquo;"),            |
+          { controller: "search", action: "search", s: "gen:silver" }, |
+          class: "btn btn-default"                                     |
+    .col-md-4
+      %h2 Find a user
+      %p Or maybe you want to see all the villains that your friend made! You |
+         can view all of a user's villains from their profile page.           |
+      %p
+        = link_to raw("See Kit's villains &raquo;"),          |
+          { controller: "users", action: "show", id: "kit" }, |
+          class: "btn btn-default"                            |
+    .col-md-4
+      %h2 Add your own villains
+      %p But we know that your own villains are the best, right? So what are |
+         you waiting for? Sign up! Add them!                                 |
+      %p
+        = link_to raw("Sign up &raquo;"), new_user_registration_path, class: "btn btn-default"
