@@ -17,28 +17,29 @@
 .mugshot-wrapper
   = image_tag @villain.mugshot.url(:medium), class: "mugshot"
 
-.tags
-  - @villain.tag_list.each do |tag|
-    = link_to tag,                                                 |
-      { controller: "search", action: "search", s: "tag:#{tag}" }, |
-      class: "tag"                                                 |
+.col-md-8
+  .tags
+    - @villain.tag_list.each do |tag|
+      = link_to tag,                                                 |
+        { controller: "search", action: "search", s: "tag:#{tag}" }, |
+        class: "tag"                                                 |
 
-%h2 Real Name
-= markdown(@villain.real_name)
+  %h2 Real Name
+  = markdown(@villain.real_name)
 
-%h2 Drive
-= markdown(@villain.drive)
+  %h2 Drive
+  = markdown(@villain.drive)
 
-%h2 Abilities
-= markdown(@villain.abilities)
+  %h2 Abilities
+  = markdown(@villain.abilities)
 
-%h2 Conditions
-%ul
-  - @villain.conditions.each do |condition|
-    %li= condition.name
+  %h2 Conditions
+  %ul
+    - @villain.conditions.each do |condition|
+      %li= condition.name
 
-%h2 Moves
-= markdown(@villain.moves)
+  %h2 Moves
+  = markdown(@villain.moves)
 
-%h2 Description
-= markdown(@villain.description)
+  %h2 Description
+  = markdown(@villain.description)
