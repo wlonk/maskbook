@@ -17,7 +17,9 @@
 = image_tag @villain.mugshot.url(:medium), class: "img-rounded pull-right"
 
 - @villain.tag_list.each do |tag|
-  %span.tag= tag
+  = link_to tag,                                                 |
+    { controller: "search", action: "search", s: "tag:#{tag}" }, |
+    class: "tag"                                                 |
 
 %h2 Real Name
 = markdown(@villain.real_name)
