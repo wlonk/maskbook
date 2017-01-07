@@ -6,7 +6,7 @@
     generation,
     by #{link_to @villain.user.name, @villain.user}
   - if current_user == @villain.user
-    .btn-group.pull-right{:role => "group"}
+    .btn-group.villain-controls{:role => "group"}
       = link_to "Edit", edit_villain_path(@villain), class: "btn btn-primary"
       = link_to "Delete",                    |
         villain_path(@villain),              |
@@ -14,12 +14,14 @@
         method: :delete,                  |
         class: "btn btn-danger"              |
 
-= image_tag @villain.mugshot.url(:medium), class: "img-rounded pull-right"
+.mugshot-wrapper
+  = image_tag @villain.mugshot.url(:medium), class: "mugshot"
 
-- @villain.tag_list.each do |tag|
-  = link_to tag,                                                 |
-    { controller: "search", action: "search", s: "tag:#{tag}" }, |
-    class: "tag"                                                 |
+.tags
+  - @villain.tag_list.each do |tag|
+    = link_to tag,                                                 |
+      { controller: "search", action: "search", s: "tag:#{tag}" }, |
+      class: "tag"                                                 |
 
 %h2 Real Name
 = markdown(@villain.real_name)

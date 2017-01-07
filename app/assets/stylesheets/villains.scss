@@ -23,3 +23,26 @@ textarea {
   margin-right: 10px;
   width: 100px;
 }
+
+@media only screen and (max-width: 992px) {
+  .mugshot-wrapper {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    small {
+      display: block;
+    }
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .mugshot-wrapper {
+    float: right;
+  }
+
+  .villain-controls {
+    float: right;
+  }
+}
