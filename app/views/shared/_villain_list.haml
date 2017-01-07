@@ -10,11 +10,11 @@
         %div
           = markdown(villain.drive)
         %div
-          - villain.conditions.each do |condition|
-            %em
-              = condition.name
+          %em
+            = villain.conditions.map { |c| c.name }.join(", ")
         - if show_user
-          %div
-            (by #{link_to villain.user.name, villain.user})
+          .text-muted
+            %em
+              by #{link_to villain.user.name, villain.user}
 .text-center
   = will_paginate @villains, renderer: BootstrapPagination::Rails
