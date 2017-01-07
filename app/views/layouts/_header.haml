@@ -1,8 +1,19 @@
 %nav.navbar.navbar-default.navbar-fixed-top
-  .container
+  .container-fluid
     .navbar-header
+      %button{                              |
+        type: "button",                     |
+        class: "navbar-toggle collapsed",   |
+        "data-toggle": "collapse",          |
+        "data-target": "#navbar-collapse",  |
+        "aria-expanded": "false",           |
+      }                                     |
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
       = link_to "Maskbook", root_path, class: "navbar-brand"
-    .navbar-collapse.collapse
+    #navbar-collapse.navbar-collapse.collapse
       %ul.nav.navbar-nav
         %li= link_to "Villains", villains_path
         - if user_signed_in?
