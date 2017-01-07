@@ -2,7 +2,7 @@
   - @villains.each do |villain|
     %li.media
       .media-left
-        = image_tag villain.mugshot.url(:thumb), class: "media-object"
+        = image_tag villain.mugshot.url(:thumb), class: "media-object center-block"
       .media-body
         %h4.media-heading
           = link_to villain.name, villain

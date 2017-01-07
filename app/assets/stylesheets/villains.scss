@@ -14,15 +14,12 @@ textarea {
   resize: none;
 }
 
-// Rolling in things from latest Bootstrap:
-.media-left {
-  display: table-cell;
-  padding-right: 10px;
-  vertical-align: top;
+.media {
+  display: flex;
+  flex-direction: row;
 }
 
-.media-body {
-  display: table-cell;
-  vertical-align: top;
-  width: 10000px;
+.media-left {
+  margin-right: 10px;
+  width: 100px;
 }
