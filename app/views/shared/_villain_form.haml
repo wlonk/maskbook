@@ -6,7 +6,10 @@
       = f.text_field :name, autofocus: true, class: "form-control"
     .form-group
       = f.label :tag_list
-      = f.text_field :tag_list, value: f.object.tag_list.join(", "), class: "form-control"
+      = f.text_field :tag_list,                                       |
+        value: f.object.tag_list.join(", "),                          |
+        class: "form-control",                                        |
+        placeholder: "No need to put in #, just comma-separated tags" |
     .form-group
       = f.label :real_name
       = f.text_field :real_name, class: "form-control"
@@ -25,9 +28,9 @@
       ~ f.text_area :abilities, class: "form-control", rows: 8
     .form-group
       = f.label :conditions
-      = f.collection_check_boxes :condition_ids, Condition.all, :id, :name do |b|
-        .checkbox
-          = b.label { b.check_box + " " + b.text }
+      %div
+        = f.collection_check_boxes :condition_ids, Condition.all, :id, :name do |b|
+          = b.label(class: "checkbox-inline") { b.check_box + " " + b.text }
     .form-group
       = f.label :moves
       ~ f.text_area :moves, class: "form-control", rows: 8
