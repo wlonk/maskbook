@@ -25,9 +25,7 @@ class Villain < ApplicationRecord
     res = all
 
     # Search for tags:
-    if !tags.empty?
-      res = res.tagged_with tags
-    end
+    res = res.tagged_with tags unless tags.empty?
 
     # Clean up and validate the generations passed in:
     gens = gens.map { |gen|
@@ -38,15 +36,11 @@ class Villain < ApplicationRecord
     }.select { |gen|
       !gen.nil?
     }
-    if !gens.empty?
-      res = res.where("generation in (?)", gens)
-    end
+    res = res.where("generation in (?)", gens) unless gens.empty?
 
     # Validate users
     users = User.where("LOWER(name) IN (?)", users.map(&:downcase))
-    if !users.empty?
-      res = res.where(user: users)
-    end
+    res = res.where(user: users) unless users.empty?
 
     # Search for the rest, textlike:
     res.where(
