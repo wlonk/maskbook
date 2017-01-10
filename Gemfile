@@ -56,6 +56,9 @@ group :development, :test do
   gem 'byebug', platform: :mri
   gem 'rspec-rails', '~> 3.5'
   gem 'factory_girl_rails', '~> 4.0'
+  gem 'simplecov', '~> 0.12.0'
+  gem 'simplecov-console', '~> 0.3.1'
+  gem 'rubocop', '~> 0.46.0'
 end
 
 group :development do
