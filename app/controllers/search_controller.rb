@@ -9,11 +9,17 @@ class SearchController < ApplicationController
 
   private
 
+  def tokenize(str)
+    str.split(/\s(?=(?:[^'"]|'[^']*'|"[^"]*")*$)/)
+      .select {|s| not s.empty? }
+      .map {|s| s.gsub(/(^ +)|( +$)|(^["']+)|(["']+$)/,'')}
+  end
+
   def parse_query(query)
     if query.nil?
       [[], [], [], ""]
     else
-      words = query.split(' ')
+      words = tokenize(query)
 
       # Get tags
       tag_prefix = "tag:"
