@@ -18,11 +18,19 @@ class VillainsController < ApplicationController
   end
 
   def index
-    if params[:tags]
-      @villains = Villain.tagged_with(params[:tags]).newest_first.paginate(page: params[:page])
-    else
-      @villains = Villain.newest_first.paginate(page: params[:page])
-    end
+    # byebug
+    @filterrific = initialize_filterrific(
+      Villain,
+      params[:filterrific],
+      select_options: {
+        sorted_by: Villain.options_for_sorted_by,
+      },
+      persistence_id: false
+    ) or return
+    @villains = @filterrific.find.paginate(page: params[:page])
+
+  rescue ActiveRecord::RecordNotFound => e
+    redirect_to(reset_filterrific_url(format: :html)) and return
   end
 
   def show

@@ -29,5 +29,3 @@
         - else
           %li= link_to "Sign up", new_user_registration_path
           %li= link_to "Login", new_user_session_path
-      = form_tag(search_path, method: "get", class: "navbar-form navbar-right") do
-        = text_field_tag :s, nil, { class: "form-control", placeholder: "Search" }
