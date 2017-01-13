@@ -43,6 +43,59 @@ RSpec.describe Villain, type: :model do
     end
   end
 
+  describe "options_for_sorted_by" do
+    it "is in order" do
+      expected = [
+        ['Name (a-z)', 'name_asc'],
+        ['Name (z-a)', 'name_desc'],
+        ['Creation date (newest first)', 'created_at_desc'],
+        ['Creation date (oldest first)', 'created_at_asc'],
+        ['Creator name (a-z)', 'user_asc'],
+        ['Creator name (z-a)', 'user_desc'],
+      ]
+      actual = Villain.options_for_sorted_by
+      expect(actual).to eq(expected)
+    end
+  end
+
+  describe "search_query" do
+    before do
+      user = create(:user, name: "Flora")
+      @first = create(:villain)
+      @second = create(:villain)
+      @third = create(:villain, user: user)
+
+      @first.tag_list.add("first")
+      @second.generation = "Silver"
+
+      @first.save
+      @second.save
+    end
+
+    it "bails on empty queries" do
+      expect(Villain.search_query(nil)).to eq(Villain.all)
+      expect(Villain.search_query("")).to eq(Villain.all)
+    end
+
+    it "filters down to matching tags" do
+      actual = Villain.search_query("tag:first").map { |v| v.attributes }
+      expected = Villain.where(id: @first.id).map {|v| v.attributes }
+      expect(actual).to eq(expected)
+    end
+
+    it "filters down to matching generations" do
+      actual = Villain.search_query("gen:silver").map { |v| v.attributes }
+      expected = Villain.where(id: @second.id).map {|v| v.attributes }
+      expect(actual).to eq(expected)
+    end
+
+    it "filters down to matching users" do
+      actual = Villain.search_query("user:flora").map { |v| v.attributes }
+      expected = Villain.where(id: @third.id).map {|v| v.attributes }
+      expect(actual).to eq(expected)
+    end
+  end
+
   describe "sorted_by" do
     before do
       user1 = create(:user, name: "C")

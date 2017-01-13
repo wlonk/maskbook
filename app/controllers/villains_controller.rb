@@ -18,7 +18,6 @@ class VillainsController < ApplicationController
   end
 
   def index
-    # byebug
     @filterrific = initialize_filterrific(
       Villain,
       params[:filterrific],
