@@ -81,6 +81,7 @@ GEM
       factory_girl (~> 4.8.0)
       railties (>= 3.0.0)
     ffi (1.9.14)
+    filterrific (2.1.2)
     friendly_id (5.1.0)
       activerecord (>= 4.0.0)
     globalid (0.3.7)
@@ -271,6 +272,7 @@ DEPENDENCIES
   byebug
   devise (~> 4.2.0)
   factory_girl_rails (~> 4.0)
+  filterrific (~> 2.1.2)
   friendly_id (~> 5.1.0)
   haml (~> 4.0.0)
   haml-rails (~> 0.9.0)

@@ -6,7 +6,7 @@ require "rails_helper"
 RSpec.describe UsersHelper, type: :helper do
   describe "gravatar_for" do
     it "gets a gravatar for a given email" do
-      user = build(:user)
+      user = build(:user, name: "Alex Rodriguez", email: "alex@example.com")
       actual = helper.gravatar_for(user)
       name = "Alex Rodriguez"
       url = "https://secure.gravatar.com/avatar/fa028cdc19589078e49959d1f9b9b7b6?s=80"

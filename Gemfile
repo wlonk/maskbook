@@ -42,6 +42,8 @@ gem "paperclip", "~> 5.0.0"
 gem 'aws-sdk', "~> 2.6.0"
 # Friendly URL paths:
 gem 'friendly_id', '~> 5.1.0'
+# Filter and sort
+gem 'filterrific', '~> 2.1.2'
 # Pagination
 gem 'will_paginate', '~> 3.1.0'
 gem 'will_paginate-bootstrap', '~> 1.0.0'

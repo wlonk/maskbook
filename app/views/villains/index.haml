@@ -4,4 +4,23 @@
   - if user_signed_in?
     .btn-group.pull-right{:role => "group"}
       = link_to "New", new_villain_path, class: "btn btn-success"
-= render partial: 'shared/villain_list', locals: { show_user: true }
+
+.row
+  .col-md-8
+    = render partial: 'shared/villain_list', locals: { show_user: true }
+  .col-md-4
+    = form_for_filterrific @filterrific do |f|
+      .form-group
+        = f.label :search_query, "Search"
+        = f.text_field :search_query, class: "form-control"
+        .help-block
+          Filter for whatever you like here. You can filter on tags,              |
+          generations, and users by prefixing your search with <code>tag:</code>, |
+          <code>gen:</code>, or <code>user:</code> For example:                   |
+        %pre
+          "tag:mad scientist" user:kit monkey
+      .form-group
+        = f.label :sorted_by, "Sort by"
+        = f.select :sorted_by, @filterrific.select_options[:sorted_by], {}, class: "form-control"
+      .form-group
+        = f.submit "search", class: "btn btn-default"
