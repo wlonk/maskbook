@@ -19,11 +19,11 @@
     .col-md-4
       %h2 Find a user
       %p Or maybe you want to see all the villains that your friend made! You |
-         can view all of a user's villains from their profile page.           |
+         can filter by creator.                                               |
       %p
-        = link_to raw("See Kit's villains &raquo;"),          |
-          { controller: "users", action: "show", id: "kit" }, |
-          class: "btn btn-default"                            |
+        = link_to raw("See Kit's villains &raquo;"),                                            |
+          { controller: "villains", action: "index", "filterrific[search_query]": "user:kit" }, |
+          class: "btn btn-default"                                                              |
     .col-md-4
       %h2 Add your own villains
       %p But we know that your own villains are the best, right? So what are |

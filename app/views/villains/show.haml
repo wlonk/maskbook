@@ -3,16 +3,21 @@
   = @villain.name
   %small
     = @villain.generation
-    generation,
-    by #{link_to @villain.user.name, @villain.user}
+    generation, by
+    = link_to @villain.user.name,                                 |
+      {                                                           |
+        controller: "villains",                                   |
+        action: "index",                                          |
+        "filterrific[search_query]": "user:#{@villain.user.name}" |
+      }                                                           |
   - if current_user == @villain.user
     .btn-group.villain-controls{:role => "group"}
       = link_to "Edit", edit_villain_path(@villain), class: "btn btn-primary"
-      = link_to "Delete",                    |
-        villain_path(@villain),              |
+      = link_to "Delete",                 |
+        villain_path(@villain),           |
         data: {confirm: 'Are you sure?'}, |
         method: :delete,                  |
-        class: "btn btn-danger"              |
+        class: "btn btn-danger"           |
 
 .mugshot-wrapper
   = image_tag @villain.mugshot.url(:medium), class: "mugshot"
