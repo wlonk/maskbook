@@ -19,7 +19,7 @@ class VillainsController < ApplicationController
 
   def index
     @filterrific = initialize_filterrific(
-      Villain,
+      Villain.all_for(current_user),
       params[:filterrific],
       select_options: {
         sorted_by: Villain.options_for_sorted_by,
@@ -27,9 +27,6 @@ class VillainsController < ApplicationController
       persistence_id: false
     ) or return
     @villains = @filterrific.find.paginate(page: params[:page])
-
-  rescue ActiveRecord::RecordNotFound => e
-    redirect_to(reset_filterrific_url(format: :html)) and return
   end
 
   def show
