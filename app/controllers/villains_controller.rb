@@ -20,7 +20,7 @@ class VillainsController < ApplicationController
   def index
     @filterrific = initialize_filterrific(
       Villain.all_for(current_user),
-      params[:filterrific],
+      params[:s],
       select_options: {
         sorted_by: Villain.options_for_sorted_by,
       },
