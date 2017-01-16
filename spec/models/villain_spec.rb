@@ -28,7 +28,12 @@ RSpec.describe Villain, type: :model do
     it "handles quoted query strings" do
       actual = Villain.send(:parse_query, '"tag:has a space" gleep')
       expected = [
-        ["has a space"],
+        [
+          {
+            positive: true,
+            word: "has a space",
+          }
+        ],
         [],
         [],
         "gleep",
@@ -92,6 +97,24 @@ RSpec.describe Villain, type: :model do
     it "filters down to matching users" do
       actual = Villain.search_query("user:flora").map { |v| v.attributes }
       expected = Villain.where(id: @third.id).map {|v| v.attributes }
+      expect(actual).to eq(expected)
+    end
+
+    it "filters down to unmatching negative tags" do
+      actual = Villain.search_query("-tag:first").map { |v| v.attributes }
+      expected = Villain.where("id IN (?)", [@second.id, @third.id]).map {|v| v.attributes }
+      expect(actual).to eq(expected)
+    end
+
+    it "filters down to unmatching negative generations" do
+      actual = Villain.search_query("-gen:silver").map { |v| v.attributes }
+      expected = Villain.where("id IN (?)", [@first.id, @third.id]).map {|v| v.attributes }
+      expect(actual).to eq(expected)
+    end
+
+    it "filters down to unmatching negative users" do
+      actual = Villain.search_query("-user:flora").map { |v| v.id }
+      expected = Villain.where("id IN (?)", [@first.id, @second.id]).map {|v| v.id }
       expect(actual).to eq(expected)
     end
   end

@@ -19,6 +19,8 @@
           <code>gen:</code>, or <code>user:</code> For example:                   |
         %pre
           "tag:mad scientist" user:kit monkey
+        .help-block
+          You can also negate these, like <code>"-tag:mad scientist"</code>.
       .form-group
         = f.label :sorted_by, "Sort by"
         = f.select :sorted_by, @filterrific.select_options[:sorted_by], {}, class: "form-control"
