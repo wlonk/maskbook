@@ -16,6 +16,7 @@
     #navbar-collapse.navbar-collapse.collapse
       %ul.nav.navbar-nav
         %li= link_to "Villains", villains_path
+      %ul.nav.navbar-nav.navbar-right
         - if user_signed_in?
           %li.dropdown
             %a{href: "#", class: "dropdown-toggle", "data-toggle": "dropdown"}
@@ -23,7 +24,6 @@
               %b.caret
             </a>
             %ul.dropdown-menu
-              %li= link_to current_user.email, current_user
               %li= link_to 'Edit profile', edit_user_registration_path
               %li= link_to "Logout", destroy_user_session_path, method: :delete
         - else

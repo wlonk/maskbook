@@ -13,6 +13,39 @@
  *= require_tree .
  *= require_self
  */
+
+// Bootstrap variables:
+$coastal-off-white:   #f0f0f1;
+$coastal-rich-green:  #7e8c6b;
+$coastal-olive-green: #a6ad8b;
+$coastal-grey-sea:    #bdc2cf;
+$coastal-slate:       #524f4c;
+$coastal-near-black:  #333333;
+
+$brand-primary: $coastal-rich-green !default;
+$brand-success: $coastal-olive-green !default;
+// $brand-info:    $coastal-off-white !default;
+// $brand-warning: $coastal-grey-sea !default;
+// $brand-danger:  $coastal-near-black !default;
+$body-bg:       $coastal-off-white !default;
+$gray-dark:     $coastal-near-black !default;
+
+$navbar-default-bg:                $coastal-slate !default;
+$navbar-default-link-color:        $coastal-rich-green !default;
+$navbar-default-link-hover-color:  $coastal-olive-green !default;
+$navbar-default-brand-hover-color: $coastal-olive-green !default;
+
+$alert-success-bg:      $coastal-olive-green;
+$alert-success-border:  $coastal-rich-green;
+$alert-success-text:    $coastal-off-white;
+$alert-danger-bg:      $coastal-grey-sea;
+$alert-danger-border:  $coastal-slate;
+$alert-danger-text:    $coastal-slate;
+
+$btn-danger-bg:     $coastal-grey-sea;
+$btn-danger-border: $coastal-slate;
+$btn-danger-color:  $coastal-slate;
+
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
@@ -33,7 +66,7 @@ html {
   width: 100%;
   /* Set the fixed height of the footer here */
   height: 60px;
-  background-color: #f5f5f5;
+  background-color: $navbar-default-bg;
 }
 
 .footer .text-muted {

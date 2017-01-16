@@ -10,7 +10,13 @@
           - if show_user
             %small.text-muted
               %em
-                by #{link_to villain.user.name, villain.user}
+                by
+                = link_to villain.user.name,                                 |
+                  {                                                          |
+                    controller: "villains",                                  |
+                    action: "index",                                         |
+                    "filterrific[search_query]": "user:#{villain.user.name}" |
+                  }                                                          |
         %div
           = markdown(villain.drive)
         %div

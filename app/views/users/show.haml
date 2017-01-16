@@ -1,8 +1,0 @@
-- provide(:title, @user.name)
-%h1
-  = gravatar_for @user
-  = @user.name
-  - if user_signed_in?
-    .btn-group.pull-right{:role => "group"}
-      = link_to "New", new_villain_path, class: "btn btn-success"
-= render partial: 'shared/villain_list', locals: { show_user: false }
