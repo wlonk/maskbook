@@ -16,6 +16,12 @@
     #navbar-collapse.navbar-collapse.collapse
       %ul.nav.navbar-nav
         %li= link_to "Villains", villains_path
+        - if user_signed_in?
+          %li= link_to "My villains", {                    |
+            controller: "villains",                        |
+            action: "index",                               |
+            "s[search_query]": "user:#{current_user.name}" |
+          }                                                |
       %ul.nav.navbar-nav.navbar-right
         - if user_signed_in?
           %li.dropdown
