@@ -31,22 +31,24 @@ class Villain < ApplicationRecord
     res = all
 
     # Search for tags:
-    res = res.tagged_with tags unless tags.empty?
+    pos_tags = tags.select { |t| t[:positive] }.map { |t| t[:word] }
+    neg_tags = tags.select { |t| !t[:positive] }.map { |t| t[:word] }
+    res = res.tagged_with pos_tags unless pos_tags.empty?
+    res = res.tagged_with(neg_tags, exclude: true) unless neg_tags.empty?
 
     # Clean up and validate the generations passed in:
-    gens = gens.map { |gen|
-      gen = gen.capitalize
-      if self.generations.include? gen
-        self.generations[gen.to_sym]
-      end
-    }.select { |gen|
-      !gen.nil?
-    }
-    res = res.where("generation in (?)", gens) unless gens.empty?
+    pos_gens = gens.select { |g| g[:positive] }.map{ |g| gen_to_sym g[:word] }.select { |g| !g.nil? }
+    neg_gens = gens.select { |g| !g[:positive] }.map{ |g| gen_to_sym g[:word] }.select { |g| !g.nil? }
+    res = res.where("generation IN (?)", pos_gens) unless pos_gens.empty?
+    res = res.where("generation NOT IN (?)", neg_gens) unless neg_gens.empty?
 
     # Validate users
-    users = User.where("LOWER(name) IN (?)", users.map(&:downcase))
-    res = res.where(user: users) unless users.empty?
+    pos_users = users.select { |u| u[:positive] }.map { |u| u[:word].downcase }
+    neg_users = users.select { |u| !u[:positive] }.map { |u| u[:word].downcase }
+    pos_users = User.where("LOWER(name) IN (?)", pos_users)
+    neg_users = User.where("LOWER(name) IN (?)", neg_users)
+    res = res.where(user: pos_users) unless pos_users.empty?
+    res = res.where.not(user: neg_users) unless neg_users.empty?
 
     # Search for the rest, textlike:
     res.where(
@@ -109,42 +111,72 @@ class Villain < ApplicationRecord
       .map {|s| s.gsub(/(^ +)|( +$)|(^["']+)|(["']+$)/,'')}
   end
 
+  def self.gen_to_sym(gen)
+    gen = gen.capitalize
+    if self.generations.include? gen
+      self.generations[gen.to_sym]
+    end
+  end
+  
+  def self.match_prefix(word, prefix)
+    word.starts_with? prefix or word.starts_with? "-#{prefix}"
+  end
+
+  def self.slice_and_polarize(word, prefix)
+    word = word.slice(prefix.length..word.length)
+    positive = !word.starts_with?(':')
+    unless positive
+      word = word.slice(1..word.length)
+    end
+    {
+      word: word,
+      positive: positive,
+    }
+  end
+
   def self.parse_query(query)
     if query.nil?
       [[], [], [], ""]
     else
       words = tokenize(query)
 
+      # For tags, generations, and users, we use a sleazy side effect of the
+      # slicing to distinguish negative and positive filters. Negative ones
+      # will have a leading `:`, which we will then interpret into polarity.
+
       # Get tags
       tag_prefix = "tag:"
-      tags = words.select {
-        |word| word.starts_with? tag_prefix
-      }.map {
-        |word| word.slice(tag_prefix.length..word.length)
+      tags = words.select { |word|
+        match_prefix(word, tag_prefix)
+      }.map { |word|
+        slice_and_polarize(word, tag_prefix)
       }
 
       # Get generations:
       gen_prefix = "gen:"
-      gens = words.select {
-        |word| word.starts_with? gen_prefix
-      }.map {
-        |word| word.slice(gen_prefix.length..word.length)
+      gens = words.select { |word|
+        match_prefix(word, gen_prefix)
+      }.map { |word|
+        slice_and_polarize(word, gen_prefix)
       }
 
       # Get users:
       user_prefix = "user:"
-      users = words.select {
-        |word| word.starts_with? user_prefix
-      }.map {
-        |word| word.slice(user_prefix.length..word.length)
+      users = words.select { |word|
+        match_prefix(word, user_prefix)
+      }.map { |word|
+        slice_and_polarize(word, user_prefix)
       }
 
       # Get the rest
       the_rest = words.select {
         |word| (
           !word.starts_with?(tag_prefix) and
+          !word.starts_with?("-#{tag_prefix}") and
           !word.starts_with?(gen_prefix) and
-          !word.starts_with?(user_prefix)
+          !word.starts_with?("-#{gen_prefix}") and
+          !word.starts_with?(user_prefix) and
+          !word.starts_with?("-#{user_prefix}")
         )
       }.join(" ")
 
