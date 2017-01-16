@@ -5,6 +5,8 @@
         = image_tag villain.mugshot.url(:thumb), class: "media-object center-block"
       .media-body
         %h4.media-heading
+          - unless villain.public
+            %span.small.glyphicon.glyphicon-lock{"aria-hidden": "true"}
           = link_to villain.name, villain
           (#{villain.generation})
           %small.text-muted

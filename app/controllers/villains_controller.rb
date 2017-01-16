@@ -66,6 +66,7 @@ class VillainsController < ApplicationController
       :description,
       :mugshot,
       :tag_list,
+      :public,
       :condition_ids => [],
     )
   end

@@ -1,5 +1,7 @@
 - provide(:title, @villain.name)
 %h1
+  - unless @villain.public
+    %span.small.glyphicon.glyphicon-lock{"aria-hidden": "true"}
   = @villain.name
   %small
     = @villain.generation
@@ -11,7 +13,7 @@
         "filterrific[search_query]": "user:#{@villain.user.name}" |
       }                                                           |
   - if current_user == @villain.user
-    .btn-group.villain-controls{:role => "group"}
+    .btn-group.villain-controls{role: "group"}
       = link_to "Edit", edit_villain_path(@villain), class: "btn btn-primary"
       = link_to "Delete",                 |
         villain_path(@villain),           |
