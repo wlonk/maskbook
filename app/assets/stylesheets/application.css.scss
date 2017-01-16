@@ -16,9 +16,9 @@
 
 // Bootstrap variables:
 $coastal-off-white:   #f0f0f1;
-$coastal-rich-green:  #7e8c6b;
-$coastal-olive-green: #a6ad8b;
 $coastal-grey-sea:    #bdc2cf;
+$coastal-olive-green: #a6ad8b;
+$coastal-rich-green:  #7e8c6b;
 $coastal-slate:       #524f4c;
 $coastal-near-black:  #333333;
 
@@ -45,6 +45,8 @@ $alert-danger-text:    $coastal-slate;
 $btn-danger-bg:     $coastal-grey-sea;
 $btn-danger-border: $coastal-slate;
 $btn-danger-color:  $coastal-slate;
+
+$jumbotron-bg: $coastal-grey-sea;
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
