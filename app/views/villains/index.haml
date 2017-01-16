@@ -9,7 +9,7 @@
   .col-md-8
     = render 'shared/villain_list'
   .col-md-4
-    = form_for_filterrific @filterrific do |f|
+    = form_for_filterrific @filterrific, {as: :s} do |f|
       .form-group
         = f.label :search_query, "Search"
         = f.text_field :search_query, class: "form-control"

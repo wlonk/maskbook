@@ -6,12 +6,12 @@
   %small
     = @villain.generation
     generation, by
-    = link_to @villain.user.name,                                 |
-      {                                                           |
-        controller: "villains",                                   |
-        action: "index",                                          |
-        "filterrific[search_query]": "user:#{@villain.user.name}" |
-      }                                                           |
+    = link_to @villain.user.name,                       |
+      {                                                 |
+        controller: "villains",                         |
+        action: "index",                                |
+        "s[search_query]": "user:#{@villain.user.name}" |
+      }                                                 |
   - if current_user == @villain.user
     .btn-group.villain-controls{role: "group"}
       = link_to "Edit", edit_villain_path(@villain), class: "btn btn-primary"
