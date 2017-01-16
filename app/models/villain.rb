@@ -1,6 +1,13 @@
 class Villain < ApplicationRecord
   include FriendlyId
 
+  scope :all_for, -> (user) {
+    if user.nil?
+      where(public: true)
+    else
+      where("public = true OR user_id = ?", user.id)
+    end
+  }
   scope :newest_first, -> { order(created_at: :desc) }
   scope :sorted_by, -> (sort_option) {
     # extract the sort direction from the param value.

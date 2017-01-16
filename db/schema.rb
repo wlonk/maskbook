@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170101221511) do
+ActiveRecord::Schema.define(version: 20170116003239) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -93,8 +93,8 @@ ActiveRecord::Schema.define(version: 20170101221511) do
     t.text     "moves"
     t.text     "abilities"
     t.text     "description"
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
     t.string   "mugshot_file_name"
     t.string   "mugshot_content_type"
     t.integer  "mugshot_file_size"
@@ -102,6 +102,7 @@ ActiveRecord::Schema.define(version: 20170101221511) do
     t.string   "real_name"
     t.integer  "generation",           default: 0
     t.string   "slug"
+    t.boolean  "public",               default: true
     t.index ["slug"], name: "index_villains_on_slug", unique: true, using: :btree
     t.index ["user_id", "created_at"], name: "index_villains_on_user_id_and_created_at", using: :btree
     t.index ["user_id"], name: "index_villains_on_user_id", using: :btree

@@ -40,7 +40,16 @@
     .form-group
       = f.label :mugshot
       = f.file_field :mugshot
-      %p.help-block Please make sure that you have the rights to use this image, and that it's family-friendly!
+      %p.help-block
+        Please make sure that you have the rights to use this image, and that
+        it's family-friendly!
+    .form-group
+      = f.label :public
+      = f.check_box :public
+      %p.help-block
+        If this character <em>really</em> isn't relevant to anyone else, make
+        sure this box is unchecked and it won't show up in listings. People can
+        still see it if you send them the link, though.
     .form-group
       = f.submit "save", class: "btn btn-default"
 

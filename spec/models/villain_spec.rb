@@ -134,4 +134,21 @@ RSpec.describe Villain, type: :model do
       expect{Villain.sorted_by("gleep_glorp")}.to raise_error(ArgumentError)
     end
   end
+
+  describe "public" do
+    it "should only show up for the creator unless it's public" do
+      user1 = create(:user)
+      user2 = create(:user)
+      villain1 = create(:villain, user: user1)
+      villain2 = create(:villain, user: user1, public: false)
+      villain3 = create(:villain, user: user1)
+
+      actual = Villain.all_for(user1)
+      expect(actual).to eq([villain1, villain2, villain3])
+      actual = Villain.all_for(user2)
+      expect(actual).to eq([villain1, villain3])
+      actual = Villain.all_for(nil)
+      expect(actual).to eq([villain1, villain3])
+    end
+  end
 end

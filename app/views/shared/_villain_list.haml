@@ -5,18 +5,19 @@
         = image_tag villain.mugshot.url(:thumb), class: "media-object center-block"
       .media-body
         %h4.media-heading
+          - unless villain.public
+            %span.small.glyphicon.glyphicon-lock{"aria-hidden": "true"}
           = link_to villain.name, villain
           (#{villain.generation})
-          - if show_user
-            %small.text-muted
-              %em
-                by
-                = link_to villain.user.name,                                 |
-                  {                                                          |
-                    controller: "villains",                                  |
-                    action: "index",                                         |
-                    "filterrific[search_query]": "user:#{villain.user.name}" |
-                  }                                                          |
+          %small.text-muted
+            %em
+              by
+              = link_to villain.user.name,                                 |
+                {                                                          |
+                  controller: "villains",                                  |
+                  action: "index",                                         |
+                  "filterrific[search_query]": "user:#{villain.user.name}" |
+                }                                                          |
         %div
           = markdown(villain.drive)
         %div
