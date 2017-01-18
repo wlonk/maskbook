@@ -72,5 +72,15 @@ html {
 }
 
 .footer .text-muted {
-  margin: 20px 0;
+  margin: 10px 0;
+}
+
+@media only screen and (max-width: 992px) {
+  body {
+    margin-bottom: 80px;
+  }
+
+  .footer {
+    height: 80px;
+  }
 }
