@@ -6,7 +6,12 @@ atom_feed do |feed|
     feed.entry(villain) do |entry|
       entry.title(villain.name)
       entry.subtitle(villain.drive)
-      entry.content(villain.description, type: 'html')
+      entry.content(
+        # We explicitly want this not to be marked as safe, so it'll be escaped
+        # per the Atom spec.
+        markdown(villain.description),
+        type: 'html'
+      )
 
       entry.author do |author|
         author.name(villain.user.name)
