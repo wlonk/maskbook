@@ -27,6 +27,11 @@ class VillainsController < ApplicationController
       persistence_id: false
     ) or return
     @villains = @filterrific.find.paginate(page: params[:page])
+
+    respond_to do |format|
+      format.html
+      format.atom { render layout: false }
+    end
   end
 
   def show

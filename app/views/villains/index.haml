@@ -24,5 +24,7 @@
       .form-group
         = f.label :sorted_by, "Sort by"
         = f.select :sorted_by, @filterrific.select_options[:sorted_by], {}, class: "form-control"
-      .form-group
+      .form-group.text-right
         = f.submit "search", class: "btn btn-default"
+        %button#get_feed.btn.btn-default
+          get feed
