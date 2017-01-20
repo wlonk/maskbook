@@ -67,7 +67,7 @@ RSpec.describe Villain, type: :model do
     before do
       user = create(:user, name: "Flora")
       @first = create(:villain)
-      @second = create(:villain)
+      @second = create(:villain, name: "Darth Sidious")
       @third = create(:villain, user: user)
 
       @first.tag_list.add("first")
@@ -113,8 +113,14 @@ RSpec.describe Villain, type: :model do
     end
 
     it "filters down to unmatching negative users" do
-      actual = Villain.search_query("-user:flora").map { |v| v.id }
-      expected = Villain.where("id IN (?)", [@first.id, @second.id]).map {|v| v.id }
+      actual = Villain.search_query("-user:flora").map { |v| v.attributes }
+      expected = Villain.where("id IN (?)", [@first.id, @second.id]).map {|v| v.attributes }
+      expect(actual).to eq(expected)
+    end
+
+    it "uses full text search" do
+      actual = Villain.search_query("Baron")
+      expected = [@first, @third]
       expect(actual).to eq(expected)
     end
   end

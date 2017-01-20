@@ -1,5 +1,15 @@
 class Villain < ApplicationRecord
   include FriendlyId
+  include PgSearch
+
+  pg_search_scope :search_for, against: [
+    :name,
+    :drive,
+    :moves,
+    :abilities,
+    :description,
+    :real_name,
+  ]
 
   scope :all_for, -> (user) {
     if user.nil?
@@ -51,19 +61,11 @@ class Villain < ApplicationRecord
     res = res.where.not(user: neg_users) unless neg_users.empty?
 
     # Search for the rest, textlike:
-    res.where(
-      %(
-        name ILIKE :query OR
-        drive ILIKE :query OR
-        moves ILIKE :query OR
-        abilities ILIKE :query OR
-        description ILIKE :query OR
-        real_name ILIKE :query
-      ),
-      {
-        query: "%#{query}%",
-      }
-    )
+    unless query.empty?
+      res.search_for query
+    else
+      res
+    end
   }
 
   friendly_id :name, use: :slugged
