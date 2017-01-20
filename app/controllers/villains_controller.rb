@@ -36,6 +36,17 @@ class VillainsController < ApplicationController
 
   def show
     @villain = Villain.friendly.find(params[:id])
+    set_meta_tags description: "#{@villain.name}: #{@villain.drive}"
+    set_meta_tags og: {
+      type: 'website',
+      title: @villain.name,
+      description: @villain.drive,
+      url: URI.join(request.url, villain_url(@villain)),
+      image: URI.join(request.url, @villain.mugshot.url(:medium)),
+    }
+    set_meta_tags twitter: {
+      card: "summary",
+    }
   end
 
   def edit

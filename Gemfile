@@ -21,7 +21,7 @@ gem 'autoprefixer-rails'
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
-# Use something better than ERB:
+# Use something better than ERB
 gem 'haml', '~> 4.0.0'
 gem 'haml-rails', '~> 0.9.0'
 
@@ -35,12 +35,12 @@ gem 'jbuilder', '~> 2.5'
 # gem 'redis', '~> 3.0'
 # Use Devise for auth{z,n}
 gem 'devise', '~> 4.2.0'
-# Render that markdown:
+# Render that markdown
 gem 'redcarpet', '~> 3.0.0'
-# Handle image attachment:
+# Handle image attachment
 gem "paperclip", "~> 5.0.0"
 gem 'aws-sdk', "~> 2.6.0"
-# Friendly URL paths:
+# Friendly URL paths
 gem 'friendly_id', '~> 5.1.0'
 # Filter and sort
 gem 'filterrific', '~> 2.1.2'
@@ -51,6 +51,8 @@ gem 'will_paginate-bootstrap', '~> 1.0.0'
 gem 'acts-as-taggable-on', '~> 4.0'
 # Full-text search
 gem 'pg_search', '~> 2.0.1'
+# Meta tags
+gem 'meta-tags', '~> 2.4.0'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
