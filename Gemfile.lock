@@ -58,6 +58,7 @@ GEM
       sass (~> 3.2)
     builder (3.2.2)
     byebug (9.0.6)
+    cancan (1.6.10)
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cocaine (0.5.8)
@@ -280,6 +281,7 @@ DEPENDENCIES
   aws-sdk (~> 2.6.0)
   bootstrap-sass (~> 3.2.0)
   byebug
+  cancan (~> 1.6.10)
   devise (~> 4.2.0)
   factory_girl_rails (~> 4.0)
   filterrific (~> 2.1.2)

@@ -33,13 +33,14 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
-# Use Devise for auth{z,n}
+# Use Devise and CanCan for auth{z,n}
 gem 'devise', '~> 4.2.0'
+gem 'cancan', '~> 1.6.10'
 # Render that markdown
 gem 'redcarpet', '~> 3.0.0'
 # Handle image attachment
-gem "paperclip", "~> 5.0.0"
-gem 'aws-sdk', "~> 2.6.0"
+gem 'paperclip', '~> 5.0.0'
+gem 'aws-sdk', '~> 2.6.0'
 # Friendly URL paths
 gem 'friendly_id', '~> 5.1.0'
 # Filter and sort
