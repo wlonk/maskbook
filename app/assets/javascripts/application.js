@@ -14,5 +14,6 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require bootstrap-sprockets
+//= require select2
 //= require filterrific/filterrific-jquery
 //= require_tree .

@@ -6,4 +6,5 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
   validates :name, presence: true
   has_many :villains
+  has_many :collab_villains, class_name: "Villain"
 end

@@ -173,11 +173,11 @@ RSpec.describe Villain, type: :model do
       villain3 = create(:villain, user: user1)
 
       actual = Villain.all_for(user1)
-      expect(actual).to eq([villain1, villain2, villain3])
+      expect(actual).to eq([villain3, villain2, villain1])
       actual = Villain.all_for(user2)
-      expect(actual).to eq([villain1, villain3])
+      expect(actual).to eq([villain3, villain1])
       actual = Villain.all_for(nil)
-      expect(actual).to eq([villain1, villain3])
+      expect(actual).to eq([villain3, villain1])
     end
   end
 end

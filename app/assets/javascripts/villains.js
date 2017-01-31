@@ -13,3 +13,8 @@ $(document).on('click', '#get_feed', function(e) {
     .toString();
   window.location.search = qs;
 });
+$(document).on('turbolinks:load', function () {
+  $('#villain_collaborator_ids').select2({
+    theme: "bootstrap"
+  });
+});
