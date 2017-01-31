@@ -42,10 +42,7 @@ RSpec.describe VillainsController, type: :controller do
 
     it "doesn't for unloggedin users" do
       get :new
-      expect(response).to redirect_to(
-        controller: "devise/sessions",
-        action: "new"
-      )
+      expect(response).to redirect_to("/")
     end
   end
 
@@ -64,10 +61,7 @@ RSpec.describe VillainsController, type: :controller do
       villain = create(:villain)
       get :edit, params: { id: villain.friendly_id }
 
-      expect(response).to redirect_to(
-        controller: "devise/sessions",
-        action: "new"
-      )
+      expect(response).to redirect_to("/")
     end
   end
 
@@ -121,7 +115,7 @@ RSpec.describe VillainsController, type: :controller do
         }
       }
 
-      expect(response).to redirect_to(assigns(:villain))
+      expect(response).to redirect_to("/")
       expect(villain.name).to eq("Baron Blade")
     end
 
@@ -136,6 +130,34 @@ RSpec.describe VillainsController, type: :controller do
 
       expect(response).to be_success
       expect(villain.name).to eq("Baron Blade")
+    end
+
+    it "allows you to update fields if you're a collaborator" do
+      user1 = create(:user)
+      user2 = create(:user)
+      villain = create(:villain, user: user1, collaborators: [user2])
+      sign_in user2
+      put :update, params: {
+        id: villain.friendly_id,
+        villain: { name: "Citizen Dawn" }
+      }
+
+      expect(response).to redirect_to(assigns(:villain))
+      expect(Villain.where(name: "Citizen Dawn").exists?)
+    end
+
+    it "doesn't allow you to update the collaborator list as a collaborator" do
+      user1 = create(:user)
+      user2 = create(:user)
+      user3 = create(:user)
+      villain = create(:villain, user: user1, collaborators: [user2])
+      sign_in user2
+      put :update, params: {
+        id: villain.friendly_id,
+        villain: { collaborator_ids: [user3.id] }
+      }
+
+      expect(Villain.find(villain.id).collaborators).to eq([user2])
     end
   end
 

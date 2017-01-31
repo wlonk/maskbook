@@ -12,9 +12,10 @@
         action: "index",                                |
         "s[search_query]": "user:#{@villain.user.name}" |
       }                                                 |
-  - if current_user == @villain.user
-    .btn-group.villain-controls{role: "group"}
+  .btn-group.villain-controls{role: "group"}
+    - if can? :update, @villain
       = link_to "Edit", edit_villain_path(@villain), class: "btn btn-primary"
+    - if can? :destroy, @villain
       = link_to "Delete",                 |
         villain_path(@villain),           |
         data: {confirm: 'Are you sure?'}, |

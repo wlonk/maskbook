@@ -28,5 +28,14 @@ class Ability
     #
     # See the wiki for details:
     # https://github.com/ryanb/cancan/wiki/Defining-Abilities
+
+    can :create, Villain
+    can :read, Villain do |villain|
+      villain.public or villain.user == user or villain.collaborators.include? user
+    end
+    can :update, Villain do |villain|
+      villain.user == user or villain.collaborators.include? user
+    end
+    can :destroy, Villain, user: user
   end
 end

@@ -51,6 +51,13 @@
         sure this box is unchecked and it won't show up in listings. People can
         still see it if you send them the link, though.
     .form-group
+      = f.label :collaborator_ids, "Collaborators"
+      %div
+        = f.select :collaborator_ids,                                                        |
+          User.where.not(id: @villain.user.id).pluck(:name, :id),                            |
+          {},                                                                                |
+          { multiple: true, class: "form-control", disabled: current_user != @villain.user } |
+    .form-group
       = f.submit "save", class: "btn btn-default"
 
 .col-md-4

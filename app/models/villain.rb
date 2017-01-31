@@ -13,10 +13,20 @@ class Villain < ApplicationRecord
 
   scope :all_for, -> (user) {
     if user.nil?
-      where(public: true)
+      ret = where(public: true)
     else
-      where("public = true OR user_id = ?", user.id)
+      ret = joins(
+        %(
+        LEFT OUTER JOIN "users_villains"
+                     ON "users_villains"."villain_id" = "villains"."id"
+        LEFT OUTER JOIN "users"
+                     ON "users"."id" = "users_villains"."user_id"
+        )
+      ).where(
+        "villains.public = true OR villains.user_id = ? OR users.id = ?", user.id, user.id
+      )
     end
+    ret.order(created_at: :desc)
   }
   scope :newest_first, -> { order(created_at: :desc) }
   scope :sorted_by, -> (sort_option) {
@@ -70,6 +80,7 @@ class Villain < ApplicationRecord
 
   friendly_id :name, use: :slugged
   belongs_to :user
+  has_and_belongs_to_many :collaborators, class_name: "User"
   validates :user_id, presence: true
   validates :name,    presence: true
 
