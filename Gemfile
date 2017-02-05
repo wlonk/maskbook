@@ -38,6 +38,11 @@ gem 'jbuilder', '~> 2.5'
 # Use Devise and CanCan for auth{z,n}
 gem 'devise', '~> 4.2.0'
 gem 'cancan', '~> 1.6.10'
+gem 'omniauth'
+gem 'omniauth-twitter'
+gem 'twitter'
+gem 'omniauth-google-oauth2'
+gem 'google-api-client'
 # Render that markdown
 gem 'redcarpet', '~> 3.0.0'
 # Handle image attachment
