@@ -19,4 +19,12 @@ module ApplicationHelper
 
     markdown.render(text).html_safe
   end
+
+  def quote_if_needed(s)
+    if s.include? " "
+      "\"#{s}\""
+    else
+      s
+    end
+  end
 end
