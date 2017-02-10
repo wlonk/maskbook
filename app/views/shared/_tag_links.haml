@@ -1,4 +1,4 @@
 - villain.tag_list.each do |tag|
-  = link_to tag,                                                                      |
-    { controller: "villains", action: "index", "s[search_query]": "\"tag:#{tag}\"" }, |
-    class: "tag"                                                                      |
+  = link_to tag,                                                                                   |
+    { controller: "villains", action: "index", "s[search_query]": quote_if_needed("tag:#{tag}") }, |
+    class: "tag"                                                                                   |
