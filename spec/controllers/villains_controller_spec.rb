@@ -175,4 +175,12 @@ RSpec.describe VillainsController, type: :controller do
       expect(Villain.all.length).to eq(0)
     end
   end
+
+  describe "#all_tags" do
+    it "gets all tags" do
+      get :all_tags, params: { format: 'json' }
+      
+      expect(response.body).to eq('[]')
+    end
+  end
 end
