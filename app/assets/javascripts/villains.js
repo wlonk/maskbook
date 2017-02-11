@@ -17,4 +17,8 @@ $(document).on('turbolinks:load', function () {
   $('#villain_collaborator_ids').select2({
     theme: "bootstrap"
   });
+  $('#villain_tag_list').select2({
+    theme: "bootstrap",
+    tags: true
+  });
 });

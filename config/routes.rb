@@ -5,4 +5,5 @@ Rails.application.routes.draw do
     controllers: { registrations: 'registrations', omniauth_callbacks: 'callbacks' }
   )
   resources :villains
+  get '/tags', to: 'villains#all_tags'
 end

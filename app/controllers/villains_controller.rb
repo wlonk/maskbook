@@ -1,9 +1,6 @@
 class VillainsController < ApplicationController
   include Devise::Controllers::Helpers 
 
-  # before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
-  # before_action :is_owner?, only: [:edit, :update, :destroy]
-
   def new
     @villain = current_user.villains.build if user_signed_in?
     authorize! :create, @villain
@@ -32,6 +29,7 @@ class VillainsController < ApplicationController
 
     respond_to do |format|
       format.html
+      format.json { render json: @villains }
       format.atom { render layout: false }
     end
   end
@@ -50,6 +48,10 @@ class VillainsController < ApplicationController
     set_meta_tags twitter: {
       card: "summary",
     }
+    respond_to do |format|
+      format.html
+      format.json { render json: @villain }
+    end
   end
 
   def edit
@@ -76,6 +78,13 @@ class VillainsController < ApplicationController
     redirect_to action: 'index', status: 303
   end
 
+  def all_tags
+    @tags = Villain.tag_counts
+    respond_to do |format|
+      format.json { render json: @tags }
+    end
+  end
+
   private
 
   def villain_params(is_owner=true)
@@ -88,8 +97,8 @@ class VillainsController < ApplicationController
       :abilities,
       :description,
       :mugshot,
-      :tag_list,
       :public,
+      :tag_list => [],
       :collaborator_ids => [],
       :condition_ids => [],
     )
