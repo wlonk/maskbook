@@ -20,7 +20,9 @@
         %pre
           "tag:mad scientist" user:Kit monkey
         .help-block
-          You can also negate these, like <code>"-tag:mad scientist"</code>.
+          You can also negate these, like
+        %pre
+          "-tag:mad scientist"
       .form-group
         = f.label :sorted_by, "Sort by"
         = f.select :sorted_by, @filterrific.select_options[:sorted_by], {}, class: "form-control"
