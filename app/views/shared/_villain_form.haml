@@ -5,11 +5,12 @@
       = f.label :name
       = f.text_field :name, autofocus: true, class: "form-control"
     .form-group
-      = f.label :tag_list
-      = f.text_field :tag_list,                                       |
-        value: f.object.tag_list.join(", "),                          |
-        class: "form-control",                                        |
-        placeholder: "No need to put in #, just comma-separated tags" |
+      = f.label :tags
+      %div
+        = f.select :tag_list,                       |
+          Villain.tag_counts,                       |
+          {},                                       |
+          { multiple: true, class: "form-control" } |
     .form-group
       = f.label :real_name
       = f.text_field :real_name, class: "form-control"

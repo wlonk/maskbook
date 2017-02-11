@@ -97,8 +97,8 @@ class VillainsController < ApplicationController
       :abilities,
       :description,
       :mugshot,
-      :tag_list,
       :public,
+      :tag_list => [],
       :collaborator_ids => [],
       :condition_ids => [],
     )
