@@ -78,6 +78,23 @@ class VillainsController < ApplicationController
     redirect_to action: 'index', status: 303
   end
 
+  def favorite
+    unless current_user.nil?
+      @villain = Villain.friendly.find(params[:id])
+      begin
+        Favorite.create(villain: @villain, user: current_user)
+      rescue ActiveRecord::RecordNotUnique
+        Favorite.where(villain: @villain, user: current_user).destroy_all
+      end
+      @count = Favorite.where(villain: @villain).count
+      respond_to do |format|
+        format.json { render json: @count }
+      end
+    else
+      render status: :forbidden, text: "Authentication required"
+    end
+  end
+
   def all_tags
     @tags = Villain.tag_counts
     respond_to do |format|
@@ -108,12 +125,4 @@ class VillainsController < ApplicationController
       ret
     end
   end
-
-  # def is_owner?
-  #   villain = current_user.villains.friendly.find_by(slug: params[:id])
-  #   if villain.nil?
-  #     villain = Villain.friendly.find(params[:id])
-  #     redirect_to villain
-  #   end
-  # end
 end

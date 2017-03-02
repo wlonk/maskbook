@@ -164,6 +164,17 @@ RSpec.describe Villain, type: :model do
     end
   end
 
+  describe "stars" do
+    it "gets all villains a particular user has starred" do
+      user = create(:user)
+      villain1 = create(:villain)
+      villain2 = create(:villain)
+      fav = create(:favorite, villain: villain2, user: user)
+      actual = Villain.stars(user.id)
+      expect(actual).to eq(Villain.where(id: villain2.id))
+    end
+  end
+
   describe "public" do
     it "should only show up for the creator unless it's public" do
       user1 = create(:user)

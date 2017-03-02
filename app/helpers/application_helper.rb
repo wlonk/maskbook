@@ -27,4 +27,20 @@ module ApplicationHelper
       s
     end
   end
+
+  def favorite_button_classes(villain, user)
+    if user.nil?
+      cls = "disabled"
+    elsif Favorite.exists?(villain: villain, user: user)
+      cls = "active"
+    else
+      cls = ""
+    end
+
+    if cls.empty?
+      "btn btn-default"
+    else
+      "btn btn-default #{cls}"
+    end
+  end
 end

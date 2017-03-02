@@ -176,6 +176,37 @@ RSpec.describe VillainsController, type: :controller do
     end
   end
 
+  describe "POST #favorite" do
+    it "fails for an unauth'd user" do
+      villain = create(:villain)
+      post :favorite, params: { id: villain.friendly_id }
+
+      response.response_code.should == 403
+      expect(Favorite.all.length).to eq(0)
+    end
+
+    it "favs when there is no fav" do
+      user = create(:user)
+      villain = create(:villain)
+      sign_in user
+      post :favorite, params: { id: villain.friendly_id, format: 'json' }
+
+      response.response_code.should == 200
+      expect(Favorite.all.length).to eq(1)
+    end
+
+    it "unfavs when there is a fav" do
+      user = create(:user)
+      villain = create(:villain)
+      fav = create(:favorite, villain: villain, user: user)
+      sign_in user
+      post :favorite, params: { id: villain.friendly_id, format: 'json' }
+
+      response.response_code.should == 200
+      expect(Favorite.all.length).to eq(0)
+    end
+  end
+
   describe "#all_tags" do
     it "gets all tags" do
       get :all_tags, params: { format: 'json' }

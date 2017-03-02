@@ -13,6 +13,13 @@
         "s[search_query]": quote_if_needed("user:#{@villain.user.name}") |
       }                                                                  |
   .btn-group.villain-controls{role: "group"}
+    %button#favorite{                                             |
+        class: (favorite_button_classes(@villain, current_user)), |
+        data: { slug: @villain.slug }                             |
+      }                                                           |
+      %span.glyphicon.glyphicon-star
+      %span.count
+        = @villain.favorites.length
     - if can? :update, @villain
       = link_to "Edit", edit_villain_path(@villain), class: "btn btn-primary"
     - if can? :destroy, @villain
