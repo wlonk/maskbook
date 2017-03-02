@@ -22,6 +22,12 @@
             action: "index",                                                |
             "s[search_query]": quote_if_needed("user:#{current_user.name}") |
           }                                                                 |
+        - if user_signed_in?
+          %li= link_to "Favorite villains", { |
+            controller: "villains",           |
+            action: "index",                  |
+            "s[stars]": (current_user.id)     |
+          }                                   |
       %ul.nav.navbar-nav.navbar-right
         - if user_signed_in?
           %li.dropdown

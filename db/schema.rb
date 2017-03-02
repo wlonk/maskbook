@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170205071549) do
+ActiveRecord::Schema.define(version: 20170301234625) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,16 @@ ActiveRecord::Schema.define(version: 20170205071549) do
     t.integer "villain_id"
     t.index ["condition_id"], name: "index_conditions_villains_on_condition_id", using: :btree
     t.index ["villain_id"], name: "index_conditions_villains_on_villain_id", using: :btree
+  end
+
+  create_table "favorites", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "villain_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "villain_id"], name: "index_favorites_on_user_id_and_villain_id", unique: true, using: :btree
+    t.index ["user_id"], name: "index_favorites_on_user_id", using: :btree
+    t.index ["villain_id"], name: "index_favorites_on_villain_id", using: :btree
   end
 
   create_table "friendly_id_slugs", force: :cascade do |t|
@@ -117,5 +127,7 @@ ActiveRecord::Schema.define(version: 20170205071549) do
     t.index ["user_id"], name: "index_villains_on_user_id", using: :btree
   end
 
+  add_foreign_key "favorites", "users"
+  add_foreign_key "favorites", "villains"
   add_foreign_key "villains", "users"
 end

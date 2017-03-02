@@ -77,10 +77,17 @@ class Villain < ApplicationRecord
       res
     end
   }
+  scope :stars, -> (query) {
+    return nil if query.nil? or query.blank?
+
+    user = User.find(query)
+    Villain.where(id: user.favorites.map { |f| f.villain_id })
+  }
 
   friendly_id :name, use: :slugged
   belongs_to :user
   has_and_belongs_to_many :collaborators, class_name: "User"
+  has_many :favorites
   validates :user_id, presence: true
   validates :name,    presence: true
 
@@ -103,6 +110,7 @@ class Villain < ApplicationRecord
     available_filters: [
       :sorted_by,
       :search_query,
+      :stars,
     ]
   )
 

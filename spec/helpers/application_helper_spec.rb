@@ -23,4 +23,31 @@ RSpec.describe ApplicationHelper, type: :helper do
       expect(actual).to eq("user:Kit")
     end
   end
+
+  describe "#favorite_button_classes" do
+    before(:each) do
+      @villain = create(:villain)
+      @user = create(:user)
+      @favorite = create(:favorite, villain: @villain, user: @user)
+    end
+
+    it "returns 'disabled' for nil user" do
+      actual = helper.favorite_button_classes(@villain, nil)
+
+      expect(actual).to eq("btn btn-default disabled")
+    end
+
+    it "returns 'active' for present favorite" do
+      actual = helper.favorite_button_classes(@villain, @user)
+
+      expect(actual).to eq("btn btn-default active")
+    end
+
+    it "returns nothing otherwise" do
+      user = create(:user)
+      actual = helper.favorite_button_classes(@villain, user)
+
+      expect(actual).to eq("btn btn-default")
+    end
+  end
 end
