@@ -1,0 +1,21 @@
+.col-md-8
+  = form_for @organization do |f|
+    = render 'shared/error_messages', object: f.object
+    - if @organization.errors.any?
+      #error_explanation
+        %h2= "#{pluralize(@organization.errors.count, "error")} prohibited this organization from being saved:"
+        %ul
+          - @organization.errors.full_messages.each do |msg|
+            %li= msg
+
+    .form-group
+      = f.label :name
+      = f.text_field :name, autofocus: true, class: "form-control"
+    .form-group
+      = f.label :description
+      = f.text_area :description, class: "form-control", rows: 8
+    .form-group
+      = f.submit 'Save', class: "btn btn-default"
+
+.col-md-4
+  = render 'shared/form_help'

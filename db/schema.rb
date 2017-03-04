@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170301234625) do
+ActiveRecord::Schema.define(version: 20170304031951) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,17 @@ ActiveRecord::Schema.define(version: 20170301234625) do
     t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
     t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
+  end
+
+  create_table "organizations", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "slug"
+    t.integer  "user_id"
+    t.index ["slug"], name: "index_organizations_on_slug", unique: true, using: :btree
+    t.index ["user_id"], name: "index_organizations_on_user_id", using: :btree
   end
 
   create_table "taggings", force: :cascade do |t|
@@ -129,5 +140,6 @@ ActiveRecord::Schema.define(version: 20170301234625) do
 
   add_foreign_key "favorites", "users"
   add_foreign_key "favorites", "villains"
+  add_foreign_key "organizations", "users"
   add_foreign_key "villains", "users"
 end

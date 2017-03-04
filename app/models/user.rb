@@ -18,6 +18,7 @@ class User < ApplicationRecord
   has_many :villains
   has_many :collab_villains, class_name: "Villain"
   has_many :favorites
+  has_many :organizations
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|

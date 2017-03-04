@@ -181,7 +181,7 @@ RSpec.describe VillainsController, type: :controller do
       villain = create(:villain)
       post :favorite, params: { id: villain.friendly_id }
 
-      response.response_code.should == 403
+      expect(response.response_code).to eq(403)
       expect(Favorite.all.length).to eq(0)
     end
 
@@ -191,7 +191,7 @@ RSpec.describe VillainsController, type: :controller do
       sign_in user
       post :favorite, params: { id: villain.friendly_id, format: 'json' }
 
-      response.response_code.should == 200
+      expect(response.response_code).to eq(200)
       expect(Favorite.all.length).to eq(1)
     end
 
@@ -202,7 +202,7 @@ RSpec.describe VillainsController, type: :controller do
       sign_in user
       post :favorite, params: { id: villain.friendly_id, format: 'json' }
 
-      response.response_code.should == 200
+      expect(response.response_code).to eq(200)
       expect(Favorite.all.length).to eq(0)
     end
   end

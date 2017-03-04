@@ -1,0 +1,31 @@
+%p.help-block
+  You can use Markdown in these fields. Most useful might be emphasis and lists.
+%h3 Emphasis
+%pre.code.help-block
+  = preserve do
+    :escaped
+      *This text will be italic*
+      _This will also be italic_
+
+      **This text will be bold**
+      __This will also be bold__
+
+      _You **can** combine them_
+%h3 Lists
+%h4 Unordered
+%pre.code.help-block
+  = preserve do
+    :escaped
+      * Item 1
+      * Item 2
+        * Item 2a
+        * Item 2b
+%h4 Ordered and Unordered Mixed
+%pre.code.help-block
+  = preserve do
+    :escaped
+      1. Item 1
+      2. Item 2
+      3. Item 3
+         * Item 3a
+         * Item 3b

@@ -7,10 +7,10 @@
         %h4.media-heading
           - unless villain.public
             %span.small.glyphicon.glyphicon-lock{"aria-hidden": "true"}
-          %button#favorite{                                                         |
-              class: ("btn-xs #{favorite_button_classes(villain, current_user)}"),  |
-              data: { slug: villain.slug }                                          |
-            }                                                                       |
+          %button#favorite{                                                        |
+              class: ("btn-xs #{favorite_button_classes(villain, current_user)}"), |
+              data: { slug: villain.slug }                                         |
+            }                                                                      |
             %span.glyphicon.glyphicon-star
             %span.count
               = villain.favorites.length
