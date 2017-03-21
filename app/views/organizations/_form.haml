@@ -15,6 +15,13 @@
       = f.label :description
       = f.text_area :description, class: "form-control", rows: 8
     .form-group
+      = f.label :villain_ids, "Members"
+      %div
+        = f.select :villain_ids,                                   |
+          Villain.all_editable_by(current_user).pluck(:name, :id), |
+          {},                                                      |
+          { multiple: true, class: "form-control" }                |
+    .form-group
       = f.submit 'Save', class: "btn btn-default"
 
 .col-md-4

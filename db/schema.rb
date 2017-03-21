@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170304031951) do
+ActiveRecord::Schema.define(version: 20170315201024) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "affiliations", force: :cascade do |t|
+    t.integer  "villain_id"
+    t.integer  "organization_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["organization_id"], name: "index_affiliations_on_organization_id", using: :btree
+    t.index ["villain_id"], name: "index_affiliations_on_villain_id", using: :btree
+  end
 
   create_table "conditions", force: :cascade do |t|
     t.string   "name"
@@ -138,6 +147,8 @@ ActiveRecord::Schema.define(version: 20170304031951) do
     t.index ["user_id"], name: "index_villains_on_user_id", using: :btree
   end
 
+  add_foreign_key "affiliations", "organizations"
+  add_foreign_key "affiliations", "villains"
   add_foreign_key "favorites", "users"
   add_foreign_key "favorites", "villains"
   add_foreign_key "organizations", "users"

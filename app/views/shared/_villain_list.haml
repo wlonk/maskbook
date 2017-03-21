@@ -1,5 +1,5 @@
 %ul.media-list
-  - @villains.each do |villain|
+  - villains.each do |villain|
     %li.media
       .media-left
         = image_tag villain.mugshot.url(:thumb), class: "media-object center-block"
@@ -33,4 +33,4 @@
           %em
             = villain.conditions.map { |c| c.name }.join(", ")
 .text-center
-  = will_paginate @villains, renderer: BootstrapPagination::Rails
+  = will_paginate villains, renderer: BootstrapPagination::Rails

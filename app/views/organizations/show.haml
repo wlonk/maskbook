@@ -12,3 +12,7 @@
         class: "btn btn-danger"           |
 
 = markdown(@organization.description)
+
+%h2 Members
+
+= render partial: 'shared/villain_list', locals: { villains: @related_villains }

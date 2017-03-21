@@ -28,6 +28,23 @@ class Villain < ApplicationRecord
     end
     ret.order(created_at: :desc)
   }
+  scope :all_editable_by, -> (user) {
+    if user.nil?
+      ret = none
+    else
+      ret = joins(
+        %(
+        LEFT OUTER JOIN "users_villains"
+                     ON "users_villains"."villain_id" = "villains"."id"
+        LEFT OUTER JOIN "users"
+                     ON "users"."id" = "users_villains"."user_id"
+        )
+      ).where(
+        "villains.user_id = ? OR users.id = ?", user.id, user.id
+      )
+    end
+    ret.order(created_at: :desc)
+  }
   scope :newest_first, -> { order(created_at: :desc) }
   scope :sorted_by, -> (sort_option) {
     # extract the sort direction from the param value.
@@ -85,15 +102,18 @@ class Villain < ApplicationRecord
   }
 
   friendly_id :name, use: :slugged
+
   belongs_to :user
   has_and_belongs_to_many :collaborators, class_name: "User"
+  has_and_belongs_to_many :conditions
   has_many :favorites
+  has_many :affiliations
+  has_many :organizations, through: :affiliations
+
   validates :user_id, presence: true
   validates :name,    presence: true
 
   enum generation: [ :Gold, :Silver, :Bronze, :Modern ]
-
-  has_and_belongs_to_many :conditions
 
   has_attached_file(
     :mugshot,

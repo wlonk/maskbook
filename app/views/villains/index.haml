@@ -7,7 +7,7 @@
 
 .row
   .col-md-8
-    = render 'shared/villain_list'
+    = render partial: 'shared/villain_list', locals: { villains: @villains }
   .col-md-4
     = form_for_filterrific @filterrific, {as: :s} do |f|
       .form-group

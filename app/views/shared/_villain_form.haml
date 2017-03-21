@@ -15,6 +15,13 @@
       = f.label :real_name
       = f.text_field :real_name, class: "form-control"
     .form-group
+      = f.label :organization_ids, "Member of"
+      %div
+        = f.select :organization_ids,                                   |
+          Organization.all_editable_by(current_user).pluck(:name, :id), |
+          {},                                                           |
+          { multiple: true, class: "form-control" }                     |
+    .form-group
       = f.label :generation
       = f.select(                                               |
         :generation,                                            |

@@ -191,4 +191,31 @@ RSpec.describe Villain, type: :model do
       expect(actual).to eq([villain3, villain1])
     end
   end
+
+  describe "all_editable_by" do
+    before(:each) do
+      @user1 = create(:user)
+      @user2 = create(:user)
+
+      @villain1 = create(:villain, user: @user1)
+      @villain2 = create(:villain, user: @user2, collaborators: [@user1])
+      @villain3 = create(:villain, user: @user2)
+    end
+
+    it "should return villains you own" do
+      expect(Villain.all_editable_by(@user1)).to include(@villain1)
+    end
+
+    it "should return villains you collaborate on" do
+      expect(Villain.all_editable_by(@user1)).to include(@villain2)
+    end
+
+    it "should not return villains you neither own nor collaborate on" do
+      expect(Villain.all_editable_by(@user1)).not_to include(@villain3)
+    end
+
+    it "should return nothing if you are not logged in" do
+      expect(Villain.all_editable_by(nil)).to eq(Villain.none)
+    end
+  end
 end

@@ -11,6 +11,7 @@ class OrganizationsController < ApplicationController
   # GET /organizations/1
   # GET /organizations/1.json
   def show
+    @related_villains = @organization.villains.paginate(page: params[:page])
   end
 
   # GET /organizations/new
@@ -63,6 +64,12 @@ class OrganizationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def organization_params
-      params.require(:organization).permit(:name, :description)
+      # @TODO you can add a villain you don't own, though it won't show up in
+      # the interface.
+      params.require(:organization).permit(
+        :name,
+        :description,
+        :villain_ids => [],
+      )
     end
 end
