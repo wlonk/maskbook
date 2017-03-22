@@ -37,5 +37,10 @@ class Ability
       villain.user == user or villain.collaborators.include? user
     end
     can :destroy, Villain, user: user
+
+    can :create, Organization
+    can :read, Organization, user: user
+    can :update, Organization, user: user
+    can :destroy, Organization, user: user
   end
 end

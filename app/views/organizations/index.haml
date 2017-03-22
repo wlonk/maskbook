@@ -1,0 +1,16 @@
+- provide(:title, "Organizations")
+%h1
+  Organizations
+  - if can? :create, Organization
+    .btn-group.pull-right{:role => "group"}
+      = link_to "New", new_organization_path, class: "btn btn-success"
+.row
+  .col-md-8
+    %ul.media-list
+      - @organizations.each do |organization|
+        %li
+          %h4
+            = link_to organization.name, organization
+    .text-center
+      = will_paginate @organizations, renderer: BootstrapPagination::Rails
+  .col-md-4

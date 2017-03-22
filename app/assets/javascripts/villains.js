@@ -37,4 +37,7 @@ $(document).on('turbolinks:load', function () {
     theme: "bootstrap",
     tags: true
   });
+  $('#villain_organization_ids').select2({
+    theme: "bootstrap"
+  });
 });

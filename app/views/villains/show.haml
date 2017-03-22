@@ -39,6 +39,13 @@
   %h2 Real Name
   = markdown(@villain.real_name)
 
+  - unless @villain.organizations.empty?
+    %h2 Member of
+    %ul
+    - @villain.organizations.each do |organization|
+      %li
+        = link_to organization.name, organization
+
   %h2 Drive
   = markdown(@villain.drive)
 

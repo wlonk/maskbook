@@ -159,6 +159,55 @@ RSpec.describe VillainsController, type: :controller do
 
       expect(Villain.find(villain.id).collaborators).to eq([user2])
     end
+
+    context "affiliations" do
+      before(:each) do
+        @request.env["devise.mapping"] = Devise.mappings[:user]
+        @user = create(:user)
+        sign_in @user
+
+        @user2 = create(:user)
+        @villain1 = create(:villain, name: "Mine", user: @user)
+        @villain2 = create(:villain, name: "Yours", user: @user2)
+        @villain3 = create(:villain, name: "Ours", user: @user2, collaborators: [@user])
+
+        @organization1 = create(:organization, name: "Mine", user: @user)
+        @organization2 = create(:organization, name: "Yours", user: @user2)
+      end
+
+      it "lets you add affiliations if you own both ends" do
+        put :update, params: {
+          id: @villain1.to_param,
+          villain: {
+            organization_ids: [@organization1.id]
+          }
+        }
+        @villain1.reload
+        expect(@villain1.organizations).to eq([@organization1])
+      end
+
+      it "lets you add affiliations if you collaborate or edit both ends" do
+        put :update, params: {
+          id: @villain3.to_param,
+          villain: {
+            organization_ids: [@organization1.id]
+          }
+        }
+        @villain3.reload
+        expect(@villain3.organizations).to eq([@organization1])
+      end
+
+      it "does not let you add affiliations if either side is not editable" do
+        put :update, params: {
+          id: @villain2.to_param,
+          villain: {
+            organization_ids: [@organization1.id]
+          }
+        }
+        @villain2.reload
+        expect(@villain2.organizations).to eq([])
+      end
+    end
   end
 
   describe "DELETE #destroy" do
@@ -181,7 +230,7 @@ RSpec.describe VillainsController, type: :controller do
       villain = create(:villain)
       post :favorite, params: { id: villain.friendly_id }
 
-      response.response_code.should == 403
+      expect(response.response_code).to eq(403)
       expect(Favorite.all.length).to eq(0)
     end
 
@@ -191,7 +240,7 @@ RSpec.describe VillainsController, type: :controller do
       sign_in user
       post :favorite, params: { id: villain.friendly_id, format: 'json' }
 
-      response.response_code.should == 200
+      expect(response.response_code).to eq(200)
       expect(Favorite.all.length).to eq(1)
     end
 
@@ -202,7 +251,7 @@ RSpec.describe VillainsController, type: :controller do
       sign_in user
       post :favorite, params: { id: villain.friendly_id, format: 'json' }
 
-      response.response_code.should == 200
+      expect(response.response_code).to eq(200)
       expect(Favorite.all.length).to eq(0)
     end
   end

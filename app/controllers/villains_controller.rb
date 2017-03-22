@@ -91,7 +91,7 @@ class VillainsController < ApplicationController
         format.json { render json: @count }
       end
     else
-      render status: :forbidden, text: "Authentication required"
+      render status: :forbidden, plain: "Authentication required"
     end
   end
 
@@ -105,6 +105,8 @@ class VillainsController < ApplicationController
   private
 
   def villain_params(is_owner=true)
+    # @TODO you can add an organization you don't own, though it won't show up
+    # in the interface.
     ret = params.require(:villain).permit(
       :name,
       :real_name,
@@ -116,13 +118,20 @@ class VillainsController < ApplicationController
       :mugshot,
       :public,
       :tag_list => [],
+      :organization_ids => [],
       :collaborator_ids => [],
       :condition_ids => [],
     )
     unless is_owner
-      ret.except(:collaborator_ids)
-    else
-      ret
+      ret = ret.except(:collaborator_ids)
     end
+    available_organizations = Organization.all_editable_by(current_user).pluck(:id)
+    ret.to_h.map { |k, v|
+      if k == "organization_ids"
+        [k, v.select { |id| available_organizations.include? id.to_i }]
+      else
+        [k, v]
+      end
+    }.to_h
   end
 end

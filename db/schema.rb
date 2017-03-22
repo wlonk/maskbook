@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170301234625) do
+ActiveRecord::Schema.define(version: 20170315201024) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "affiliations", force: :cascade do |t|
+    t.integer  "villain_id"
+    t.integer  "organization_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["organization_id"], name: "index_affiliations_on_organization_id", using: :btree
+    t.index ["villain_id"], name: "index_affiliations_on_villain_id", using: :btree
+  end
 
   create_table "conditions", force: :cascade do |t|
     t.string   "name"
@@ -48,6 +57,17 @@ ActiveRecord::Schema.define(version: 20170301234625) do
     t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
     t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
+  end
+
+  create_table "organizations", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "slug"
+    t.integer  "user_id"
+    t.index ["slug"], name: "index_organizations_on_slug", unique: true, using: :btree
+    t.index ["user_id"], name: "index_organizations_on_user_id", using: :btree
   end
 
   create_table "taggings", force: :cascade do |t|
@@ -127,7 +147,10 @@ ActiveRecord::Schema.define(version: 20170301234625) do
     t.index ["user_id"], name: "index_villains_on_user_id", using: :btree
   end
 
+  add_foreign_key "affiliations", "organizations"
+  add_foreign_key "affiliations", "villains"
   add_foreign_key "favorites", "users"
   add_foreign_key "favorites", "villains"
+  add_foreign_key "organizations", "users"
   add_foreign_key "villains", "users"
 end
