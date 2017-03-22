@@ -123,9 +123,15 @@ class VillainsController < ApplicationController
       :condition_ids => [],
     )
     unless is_owner
-      ret.except(:collaborator_ids)
-    else
-      ret
+      ret = ret.except(:collaborator_ids)
     end
+    available_organizations = Organization.all_editable_by(current_user).pluck(:id)
+    ret.to_h.map { |k, v|
+      if k == "organization_ids"
+        [k, v.select { |id| available_organizations.include? id.to_i }]
+      else
+        [k, v]
+      end
+    }.to_h
   end
 end

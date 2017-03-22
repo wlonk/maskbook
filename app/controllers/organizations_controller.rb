@@ -64,12 +64,17 @@ class OrganizationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def organization_params
-      # @TODO you can add a villain you don't own, though it won't show up in
-      # the interface.
+      available_villains = Villain.all_editable_by(current_user).pluck(:id)
       params.require(:organization).permit(
         :name,
         :description,
         :villain_ids => [],
-      )
+      ).to_h.map { |k, v|
+        if k == "villain_ids"
+          [k, v.select { |id| available_villains.include? id.to_i }]
+        else
+          [k, v]
+        end
+      }.to_h
     end
 end

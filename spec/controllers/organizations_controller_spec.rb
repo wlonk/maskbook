@@ -150,6 +150,51 @@ RSpec.describe OrganizationsController, type: :controller do
         expect(response).to render_template('edit')
       end
     end
+
+    context "affiliations" do
+      before(:each) do
+        @user2 = create(:user)
+        @villain1 = create(:villain, name: "Mine", user: @user)
+        @villain2 = create(:villain, name: "Yours", user: @user2)
+        @villain3 = create(:villain, name: "Ours", user: @user2, collaborators: [@user])
+
+        @organization1 = create(:organization, name: "Mine", user: @user)
+        @organization2 = create(:organization, name: "Yours", user: @user2)
+      end
+
+      it "lets you add affiliations if you own both ends" do
+        put :update, params: {
+          id: @organization1.to_param,
+          organization: {
+            villain_ids: [@villain1.id]
+          }
+        }
+        @organization1.reload
+        expect(@organization1.villains).to eq([@villain1])
+      end
+
+      it "lets you add affiliations if you collaborate or edit both ends" do
+        put :update, params: {
+          id: @organization1.to_param,
+          organization: {
+            villain_ids: [@villain3.id]
+          }
+        }
+        @organization1.reload
+        expect(@organization1.villains).to eq([@villain3])
+      end
+
+      it "does not let you add affiliations if either side is not editable" do
+        put :update, params: {
+          id: @organization1.to_param,
+          organization: {
+            villain_ids: [@villain2.id]
+          }
+        }
+        @organization1.reload
+        expect(@organization1.villains).to eq([])
+      end
+    end
   end
 
   describe "DELETE #destroy" do
