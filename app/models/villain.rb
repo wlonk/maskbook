@@ -145,6 +145,37 @@ class Villain < ApplicationRecord
     ]
   end
 
+  def conditions_emoji
+    conditions.map {
+      |c|
+      case c.name
+      when "Afraid"
+        "<span title='afraid'>😨</span>"
+      when "Angry"
+        "<span title='angry'>😡</span>"
+      when "Guilty"
+        "<span title='guilty'>😬</span>"
+      when "Hopeless"
+        "<span title='hopeless'>😶</span>"
+      when "Insecure"
+        "<span title='insecure'>😳</span>"
+      end
+    }.join(" ").html_safe
+  end
+
+  def generation_emoji
+    case generation.to_sym
+    when :Gold
+      "<span title='gold'>⭐️</span>".html_safe
+    when :Silver
+      "<span title='silver'>✨</span>".html_safe
+    when :Bronze
+      "<span title='bronze'>⚡️</span>".html_safe
+    when :Modern
+      "<span title='modern'>☁️</span>".html_safe
+    end
+  end
+
   private
 
   def self.tokenize(str)
