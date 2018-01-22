@@ -1,4 +1,4 @@
-ruby '2.3.3'
+ruby '2.5.0'
 source 'https://rubygems.org'
 
 git_source(:github) do |repo_name|
@@ -73,7 +73,7 @@ group :development, :test do
   gem 'factory_girl_rails', '~> 4.0'
   gem 'simplecov', '~> 0.12.0'
   gem 'simplecov-console', '~> 0.3.1'
-  gem 'rubocop', '~> 0.46.0'
+  gem 'rubocop', '~> 0.49.0'
 end
 
 group :development do
