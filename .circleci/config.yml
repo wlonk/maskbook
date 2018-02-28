@@ -1,0 +1,9 @@
+version: 2
+jobs:
+  test:
+    docker:
+      - image: circleci/ruby:2.3.3
+    steps:
+      - checkout
+      - run:
+          command: bin/rails test
